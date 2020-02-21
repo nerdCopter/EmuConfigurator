@@ -691,42 +691,61 @@
                         </table>
                     </div>
 
-                        <div class="gui_box spa spacer_left">
+                        <div class="gui_box grey spa spacer_left">
                             <table class="cf">
                                 <thead>
-                                    <tr>
+                                    <tr colspan="4">
+                                        <th>
+
+                                        <div>
+                                            <div i18n="pidTuningSPA" style="float:left;"></div>
+                                            <div class="helpicon cf_tip" i18n_title="pidTuningSPAHelp"></div>
+                                        </div>
+                                        </th>
                                         <th i18n="pidTuningSPA_P"></th>
                                         <th i18n="pidTuningSPA_I"></th>
                                         <th i18n="pidTuningSPA_D"></th>
-
                                     </tr>
                                 </thead>
+
                                 <tbody>
-                                    <tr style="height: 35px;">
-                                        <td class="leftzero"><input type="number" name="spa_P" step="1" min="0"
+                                    <!-- SPA Roll/Pitch Mix pre 0.2.23-->
+                                    <tr class="spa spa_mix" colspan="4">
+                                        <td class="leftzero" i18n="pidTuningSPAMix"></td>
+                                        <td class="leftzero"><input type="number" name="spa_P" id="spaPidentificator" step="1" min="0"
                                             max="250" /></td>
                                         <td class="leftzero"><input type="number" name="spa_I" id="spaIidentificator" step="1" min="0"
                                             max="250" /></td>
                                         <td class="leftzero"><input type="number" name="spa_D" id="spaDidentificator" step="1" min="0"
                                             max="250" /></td>
                                     </tr>
-                                </tbody>
-                            </table>
-                        </div>
 
-                        <div class="gui_box spa_yaw spacer_left">
-                            <table class="cf">
-                                <thead>
-                                    <tr>
-                                        <th i18n="pidTuningSPAYaw_P"></th>
-                                        <th i18n="pidTuningSPAYaw_I"></th>
-                                        <th i18n="pidTuningSPAYaw_D"></th>
-
+                                    <!-- SPA per axis 0.2.23+ -->
+                                    <tr class="spa spa_roll" colspan="4">
+                                        <td class="leftzero" i18n="pidTuningSPARoll"></td>
+                                        <td class="leftzero"><label name="">use CLI</label><!--<input type="number" name="spaRoll_P" id="spaRollPidentificator" step="1" min="0"
+                                            max="250" />--></td>
+                                        <td class="leftzero"><label name="">use CLI</label><!--<input type="number" name="spaRoll_I" id="spaRollIidentificator" step="1" min="0"
+                                            max="250" />--></td>
+                                        <td class="leftzero"><label name="">use CLI</label><!--<input type="number" name="spaRoll_D" id="spaRollDidentificator" step="1" min="0"
+                                            max="250" />--></td>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    <tr style="height: 35px;">
-                                        <td class="leftzero"><input type="number" name="spaYaw_P" step="1" min="0"
+
+                                    <!-- SPA per axis 0.2.23+ -->
+                                    <tr class="spa spa_pitch" colspan="4">
+                                        <td class="leftzero" i18n="pidTuningSPAPitch"></td>
+                                        <td class="leftzero"><label name="">use CLI</label><!--<input type="number" name="spaPitch_P" id="spaPitchPidentificator" step="1" min="0"
+                                            max="250" />--></td>
+                                        <td class="leftzero"><label name="">use CLI</label><!--<input type="number" name="spaPitch_I" id="spaPitchIidentificator" step="1" min="0"
+                                            max="250" />--></td>
+                                        <td class="leftzero"><label name="">use CLI</label><!--<input type="number" name="spaPitch_D" id="spaPitchDidentificator" step="1" min="0"
+                                            max="250" />--></td>
+                                    </tr>
+
+                                    <!-- SPA yaw since 0.2.0-->
+                                    <tr class="spa spa_yaw" colspan="4" style="height: 35px;">
+                                        <td class="leftzero" i18n="pidTuningSPAYaw"></td>
+                                        <td class="leftzero"><input type="number" name="spaYaw_P" id="spaYawPidentificator" step="1" min="0"
                                             max="250" /></td>
                                         <td class="leftzero"><input type="number" name="spaYaw_I" id="spaYawIidentificator" step="1" min="0"
                                             max="250" /></td>
@@ -1258,7 +1277,7 @@
                                     </div>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr class="pidTuningDTermNotchFiltersGroup">
                                 <th colspan="2">
                                     <div class="pid_mode">
                                         <div  i18n="pidTuningDTermNotchFiltersGroup" />
@@ -1268,7 +1287,7 @@
                                 </th>
                             </tr>
 
-                            <tr class="newFilter">
+                            <tr class="newFilter pidTuningDTermNotchFiltersGroup">
                                 <td>
                                     <span class="groupSwitchValue">
                                         <span class="inputSwitch"><input type="checkbox" id="dTermNotchEnabled" class="toggle" /></span>
@@ -1284,7 +1303,7 @@
                                 </td>
                             </tr>
 
-                            <tr class="newFilter">
+                            <tr class="newFilter pidTuningDTermNotchFiltersGroup">
                                 <td>
                                     <input type="number" name="dTermNotchCutoff" step="1" min="0" max="16000"/>
                                 </td>
@@ -1297,13 +1316,13 @@
                                 </td>
                             </tr>
 
-                            <tr>
+                            <tr class="pidTuningYawLowpassGroup">
                                 <th colspan="2">
                                     <div class="pid_mode" i18n="pidTuningYawLospassFiltersGroup" />
                                 </th>
                             </tr>
 
-                            <tr>
+                            <tr class="pidTuningYawLowpassGroup">
                                 <td>
                                     <span class="groupSwitchValue">
                                         <span class="inputSwitch"><input type="checkbox" id="yawLowpassEnabled" class="toggle" /></span>

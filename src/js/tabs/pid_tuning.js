@@ -106,18 +106,33 @@ TABS.pid_tuning.initialize = function (callback) {
         $('.tpa input[name="tpa_I"]').val(EMUF_ADVANCED.dynamic_THR_PID_I.toFixed(2));
         $('.tpa input[name="tpa_D"]').val(EMUF_ADVANCED.dynamic_THR_PID_D.toFixed(2));
         $('.tpa input[name="tpa-breakpoint"]').val(RC_tuning.dynamic_THR_breakpoint);
-  if (semver.gte(CONFIG.apiVersion, "1.43.0")) {
-        $('.spa input[name="spa_P"]').val(ADVANCED_TUNING.setPointPTransition);
-        $('.spa input[name="spa_I"]').val(ADVANCED_TUNING.setPointITransition);
-        $('.spa input[name="spa_D"]').val(ADVANCED_TUNING.setPointDTransition);
-        $('.spa_yaw input[name="spaYaw_P"]').val(ADVANCED_TUNING.setPointPTransitionYaw);
-        $('.spa_yaw input[name="spaYaw_I"]').val(ADVANCED_TUNING.setPointITransitionYaw);
-        $('.spa_yaw input[name="spaYaw_D"]').val(ADVANCED_TUNING.setPointDTransitionYaw);
-      }else{
+
+        if (semver.gte(CONFIG.apiVersion, "1.43.0")) {
+            //per axis SPA MSP not yet implemented, retain spa(_mix) values to not corrupt saves:
+            $('.spa input[name="spa_P"]').val(ADVANCED_TUNING.setPointPTransition);
+            $('.spa input[name="spa_I"]').val(ADVANCED_TUNING.setPointITransition);
+            $('.spa input[name="spa_D"]').val(ADVANCED_TUNING.setPointDTransition);
+            if (semver.lt(CONFIG.flightControllerVersion, "0.2.23")) {
+                //MSP not yet implemented
+                $('.spa_roll').hide();
+                $('.spa_pitch').hide();
+            } else {
+                $('.spa_mix').hide();
+                //MSP not yet implemented:
+                //$('.spa_roll input[name="spaRoll_P"]').val(ADVANCED_TUNING.setPointRollPTransition);
+                //$('.spa_roll input[name="spaRoll_I"]').val(ADVANCED_TUNING.setPointRollITransition);
+                //$('.spa_roll input[name="spaRoll_D"]').val(ADVANCED_TUNING.setPointRollDTransition);
+                //$('.spa_pitch input[name="spaPitch_P"]').val(ADVANCED_TUNING.setPointPitchPTransition);
+                //$('.spa_pitch input[name="spaPitch_I"]').val(ADVANCED_TUNING.setPointPitchITransition);
+                //$('.spa_pitch input[name="spaPitch_D"]').val(ADVANCED_TUNING.setPointPitchDTransition);
+            }
+            $('.spa_yaw input[name="spaYaw_P"]').val(ADVANCED_TUNING.setPointPTransitionYaw);
+            $('.spa_yaw input[name="spaYaw_I"]').val(ADVANCED_TUNING.setPointITransitionYaw);
+            $('.spa_yaw input[name="spaYaw_D"]').val(ADVANCED_TUNING.setPointDTransitionYaw);
+        } else {
           $('.spa').hide();
           $('.spa_yaw').hide();
         }
-
 
         if (semver.lt(CONFIG.apiVersion, "1.10.0")) {
             $('.pid_tuning input[name="rc_yaw_expo"]').hide();
@@ -137,6 +152,12 @@ TABS.pid_tuning.initialize = function (callback) {
             $('.tab-pid_tuning .subtab-filter').hide();
             $('.tab-pid_tuning .tab_container').hide();
             $('.pid_tuning input[name="rc_rate_yaw"]').hide();
+            $('.pid_filter .pidTuningYawLowpassGroup').hide();
+        }
+
+        //temporary hide yawlowpass group for Emu 0.2.30+
+        if (semver.gte(CONFIG.flightControllerVersion, "0.2.30")) {
+            $('.pid_filter .pidTuningYawLowpassGroup').hide();
         }
 
         if (semver.gte(CONFIG.apiVersion, "1.20.0")
@@ -164,6 +185,11 @@ TABS.pid_tuning.initialize = function (callback) {
             $('input[name="dtermSetpoint-number"]').val(ADVANCED_TUNING.dtermSetpointWeight / 100);
         } else {
             $('.pid_filter .newFilter').hide();
+        }
+
+        //temporary hide dtem notch for Emu 0.2.30+
+        if (semver.gte(CONFIG.flightControllerVersion, "0.2.30")) {
+            $('.pid_filter .pidTuningDTermNotchFiltersGroup').hide();
         }
 
         if (semver.gte(CONFIG.apiVersion, "1.21.0")) {
@@ -357,8 +383,13 @@ TABS.pid_tuning.initialize = function (callback) {
             throttleBoostNumberElement.val(ADVANCED_TUNING.throttleBoost).trigger('input');
 
             // Acro Trainer
-            var acroTrainerAngleLimitNumberElement = $('input[name="acroTrainerAngleLimit-number"]');
-            acroTrainerAngleLimitNumberElement.val(ADVANCED_TUNING.acroTrainerAngleLimit).trigger('input');
+            //temporary hide acrotrainer for Emu 0.2.23+
+            if (semver.lt(CONFIG.flightControllerVersion, "0.2.23")) {
+                var acroTrainerAngleLimitNumberElement = $('input[name="acroTrainerAngleLimit-number"]');
+                acroTrainerAngleLimitNumberElement.val(ADVANCED_TUNING.acroTrainerAngleLimit).trigger('input');
+            } else {
+                $('.acroTrainerAngleLimit').hide();
+            }
 
             // Yaw D
             $('.pid_tuning .YAW input[name="d"]').val(PIDs[2][2]); // PID Yaw D
