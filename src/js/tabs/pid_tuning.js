@@ -160,6 +160,12 @@ TABS.pid_tuning.initialize = function (callback) {
             $('.pid_filter .pidTuningYawLowpassGroup').hide();
         }
 
+        //temporary solution until MSP 1.45
+        //values not yet implemented
+        if (semver.lte(CONFIG.flightControllerVersion, "0.2.3")) {
+            $('.smartwitchgyro').hide();
+        }
+
         if (semver.gte(CONFIG.apiVersion, "1.20.0")
             || semver.gte(CONFIG.apiVersion, "1.16.0") && FEATURE_CONFIG.features.isEnabled('SUPEREXPO_RATES')) {
             $('#pid-tuning .rate').text(i18n.getMessage("pidTuningSuperRate"));
@@ -745,24 +751,19 @@ TABS.pid_tuning.initialize = function (callback) {
             RC_tuning.throttle_limit_percent = parseInt($('.throttle_limit input[name="throttleLimitPercent"]').val());
         }
 
-
-
         EMUF_ADVANCED.dynamic_THR_PID_I = parseFloat($('.tpa input[name="tpa_I"]').val());
         EMUF_ADVANCED.dynamic_THR_PID_D = parseFloat($('.tpa input[name="tpa_D"]').val());
 
-  if (semver.gte(CONFIG.apiVersion, "1.43.0")) {
-        ADVANCED_TUNING.errorBoostYaw = $('input[name="errorBoostYaw-number"]').val();
-        ADVANCED_TUNING.errorBoostLimitYaw = $('input[name="errorBoostLimitYaw-number"]').val();
-        ADVANCED_TUNING.setPointPTransition = parseFloat($('.spa input[name="spa_P"]').val());
-        ADVANCED_TUNING.setPointITransition = parseFloat($('.spa input[name="spa_I"]').val());
-        ADVANCED_TUNING.setPointDTransition = parseFloat($('.spa input[name="spa_D"]').val());
-        ADVANCED_TUNING.setPointPTransitionYaw = parseFloat($('.spa_yaw input[name="spaYaw_P"]').val());
-        ADVANCED_TUNING.setPointITransitionYaw = parseFloat($('.spa_yaw input[name="spaYaw_I"]').val());
-        ADVANCED_TUNING.setPointDTransitionYaw = parseFloat($('.spa_yaw input[name="spaYaw_D"]').val());
-
-      }
-
-
+        if (semver.gte(CONFIG.apiVersion, "1.43.0")) {
+            ADVANCED_TUNING.errorBoostYaw = $('input[name="errorBoostYaw-number"]').val();
+            ADVANCED_TUNING.errorBoostLimitYaw = $('input[name="errorBoostLimitYaw-number"]').val();
+            ADVANCED_TUNING.setPointPTransition = parseFloat($('.spa input[name="spa_P"]').val());
+            ADVANCED_TUNING.setPointITransition = parseFloat($('.spa input[name="spa_I"]').val());
+            ADVANCED_TUNING.setPointDTransition = parseFloat($('.spa input[name="spa_D"]').val());
+            ADVANCED_TUNING.setPointPTransitionYaw = parseFloat($('.spa_yaw input[name="spaYaw_P"]').val());
+            ADVANCED_TUNING.setPointITransitionYaw = parseFloat($('.spa_yaw input[name="spaYaw_I"]').val());
+            ADVANCED_TUNING.setPointDTransitionYaw = parseFloat($('.spa_yaw input[name="spaYaw_D"]').val());
+        }
     }
 
     function showAllPids() {

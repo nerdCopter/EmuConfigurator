@@ -676,6 +676,13 @@
     padding: 0px;
 }
 
+.smartwitchgyro {
+    width: 45%;
+    max-width: 45%;
+    min-width: 45%;
+    margin: 0 auto;
+}
+
 .tab-pid_tuning .rc_curve_bg {
     float: left;
 }

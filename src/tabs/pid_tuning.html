@@ -678,7 +678,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr style="height: 35px;">
+                                <tr>
                                     <td class="leftzero"><input type="number" name="tpa_P" step="0.01" min="0"
                                         max="2.50" /></td>
                                     <td class="leftzero"><input type="number" name="tpa_I" id="tpaIidentificator" step="0.01" min="0"
@@ -711,7 +711,7 @@
                                 <tbody>
                                     <!-- SPA Roll/Pitch Mix pre 0.2.23-->
                                     <tr class="spa spa_mix" colspan="4">
-                                        <td class="leftzero" i18n="pidTuningSPAMix"></td>
+                                        <td class="leftzero" i18n="axisRollPitchMix"></td>
                                         <td class="leftzero"><input type="number" name="spa_P" id="spaPidentificator" step="1" min="0"
                                             max="250" /></td>
                                         <td class="leftzero"><input type="number" name="spa_I" id="spaIidentificator" step="1" min="0"
@@ -721,8 +721,8 @@
                                     </tr>
 
                                     <!-- SPA per axis 0.2.23+ -->
-                                    <tr class="spa spa_roll" colspan="4">
-                                        <td class="leftzero" i18n="pidTuningSPARoll"></td>
+                                    <tr class="spa spa_roll ROLL" colspan="4">
+                                        <td class="leftzero pid_roll" i18n="axisRoll"></td>
                                         <td class="leftzero"><label name="">use CLI</label><!--<input type="number" name="spaRoll_P" id="spaRollPidentificator" step="1" min="0"
                                             max="250" />--></td>
                                         <td class="leftzero"><label name="">use CLI</label><!--<input type="number" name="spaRoll_I" id="spaRollIidentificator" step="1" min="0"
@@ -732,8 +732,8 @@
                                     </tr>
 
                                     <!-- SPA per axis 0.2.23+ -->
-                                    <tr class="spa spa_pitch" colspan="4">
-                                        <td class="leftzero" i18n="pidTuningSPAPitch"></td>
+                                    <tr class="spa spa_pitch PITCH" colspan="4">
+                                        <td class="leftzero pid_pitch" i18n="axisPitch"></td>
                                         <td class="leftzero"><label name="">use CLI</label><!--<input type="number" name="spaPitch_P" id="spaPitchPidentificator" step="1" min="0"
                                             max="250" />--></td>
                                         <td class="leftzero"><label name="">use CLI</label><!--<input type="number" name="spaPitch_I" id="spaPitchIidentificator" step="1" min="0"
@@ -743,8 +743,8 @@
                                     </tr>
 
                                     <!-- SPA yaw since 0.2.0-->
-                                    <tr class="spa spa_yaw" colspan="4" style="height: 35px;">
-                                        <td class="leftzero" i18n="pidTuningSPAYaw"></td>
+                                    <tr class="spa spa_yaw YAW" colspan="4">
+                                        <td class="leftzero pid_yaw" i18n="axisYaw"></td>
                                         <td class="leftzero"><input type="number" name="spaYaw_P" id="spaYawPidentificator" step="1" min="0"
                                             max="250" /></td>
                                         <td class="leftzero"><input type="number" name="spaYaw_I" id="spaYawIidentificator" step="1" min="0"
@@ -1190,7 +1190,6 @@
 
                     <!-- end IMUF-->
 
-
                     <div class="gui_box grey topspacer pid_filter two_columns_second">
                         <table class="pid_titlebar new_rates">
                             <tr>
@@ -1339,7 +1338,74 @@
                             </tr>
                         </table>
                     </div>
+
                 </div>
+
+
+<!-- new smartdterm witchcraft gyroaverage section -->
+                        <div class="gui_box spacer_left smartwitchgyro" >
+                            <table class="cf">
+                                <thead>
+                                    <tr colspan="4">
+                                        <th></th>
+                                        <th>
+                                            <div>
+                                                <div i18n="pidTuningSmartDTermSmoothing" style="float:left;"></div>
+                                                <div class="helpicon cf_tip" i18n_title="pidTuningSmartDTermSmoothingHelp"></div>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div>
+                                                <div i18n="pidTuningWitchcraft" style="float:left;"></div>
+                                                <div class="helpicon cf_tip" i18n_title="pidTuningWitchcraftHelp"></div>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div>
+                                                <div i18n="pidTuningGyroAverage" style="float:left;"></div>
+                                                <div class="helpicon cf_tip" i18n_title="pidTuningGyroAverageHelp"></div>
+                                            </div>
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Roll smartdterm, witchcraft, gyroaverage-->
+                                    <tr class="ROLL" colspan="4">
+                                        <td class="leftzero pid_roll" i18n="axisRoll"></td>
+                                        <td class="leftzero"><label name="">use CLI</label><!--<input type="number" name="" id="" step="1" min="0"
+                                            max="250" />--></td>
+                                        <td class="leftzero"><label name="">use CLI</label><!--<input type="number" name="" id="" step="1" min="0"
+                                            max="10" />--></td>
+                                        <td class="leftzero"><label name="">use CLI</label><!--<input type="number" name="" id="" step="1" min="0"
+                                            max="10" />--></td>
+                                    </tr>
+                                    <!-- Pitch smartdterm, witchcraft, gyroaverage-->
+                                    <tr class="PITCH" colspan="4">
+                                        <td class="leftzero pid_pitch" i18n="axisPitch"></td>
+                                        <td class="leftzero"><label name="">use CLI</label><!--<input type="number" name="" id="" step="1" min="0"
+                                            max="250" />--></td>
+                                        <td class="leftzero"><label name="">use CLI</label><!--<input type="number" name="" id="" step="1" min="0"
+                                            max="10" />--></td>
+                                        <td class="leftzero"><label name="">use CLI</label><!--<input type="number" name="" id="" step="1" min="0"
+                                            max="10" />--></td>
+                                    </tr>
+                                    <!-- yaw smartdterm, witchcraft, gyroaverage-->
+                                    <tr class="YAW" colspan="4">
+                                        <td class="leftzero pid_yaw" i18n="axisYaw"></td>
+                                        <td class="leftzero"><label name="">use CLI</label><!--<input type="number" name="" id="" step="1" min="0"
+                                            max="250" />--></td>
+                                        <td class="leftzero"><label name="">use CLI</label><!--<input type="number" name="" id="" step="1" min="0"
+                                            max="10" />--></td>
+                                        <td class="leftzero"><label name="">use CLI</label><!--<input type="number" name="" id="" step="1" min="0"
+                                            max="10" />--></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+<!-- end smartdterm witchcraft gyroaverage section -->
+
+
             </div>
         </form>
         </div>
