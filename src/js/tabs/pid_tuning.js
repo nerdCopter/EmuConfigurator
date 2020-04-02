@@ -204,8 +204,16 @@ TABS.pid_tuning.initialize = function(callback) {
         }
 
         if (semver.gte(CONFIG.apiVersion, "1.24.0")) {
-            $('.pid_tuning input[name="angleLimit"]').val(ADVANCED_TUNING.levelAngleLimit);
-            $('.pid_tuning input[name="sensitivity"]').val(ADVANCED_TUNING.levelSensitivity);
+            if (semver.lte(CONFIG.apiVersion, "1.43.0")) {
+                $('.pid_tuning input[name="angleLimit"]').val(ADVANCED_TUNING.levelAngleLimit);
+                $('.pid_tuning input[name="sensitivity"]').val(ADVANCED_TUNING.levelSensitivity);
+                $('.NEWANGLEUI').hide();
+            } else { //skip 1.44 & 1.45 not implemented and older angle UI broken
+                if (semver.gte(CONFIG.apiVersion, "1.45.0")) {        //TESTING--needs to be 1.46 for release
+                    //read new angle features
+                    $('.OLDANGLEUI').hide();
+                }
+            }
         } else {
             $('.pid_sensitivity').hide();
         }
@@ -400,8 +408,12 @@ TABS.pid_tuning.initialize = function(callback) {
             throttleBoostNumberElement.val(ADVANCED_TUNING.throttleBoost).trigger('input');
 
             // Acro Trainer
-            var acroTrainerAngleLimitNumberElement = $('input[name="acroTrainerAngleLimit-number"]');
-            acroTrainerAngleLimitNumberElement.val(ADVANCED_TUNING.acroTrainerAngleLimit).trigger('input');
+            if (semver.lt(CONFIG.apiVersion, "1.44.0")) {
+                var acroTrainerAngleLimitNumberElement = $('input[name="acroTrainerAngleLimit-number"]');
+                acroTrainerAngleLimitNumberElement.val(ADVANCED_TUNING.acroTrainerAngleLimit).trigger('input');
+            } else {
+                $('.acroTrainerAngleLimit').hide();
+            }
 
             // Yaw D
             $('.pid_tuning .YAW input[name="d"]').val(PIDs[2][2]); // PID Yaw D
@@ -692,8 +704,14 @@ TABS.pid_tuning.initialize = function(callback) {
         }
 
         if (semver.gte(CONFIG.apiVersion, "1.24.0")) {
-            ADVANCED_TUNING.levelAngleLimit = parseInt($('.pid_tuning input[name="angleLimit"]').val());
-            ADVANCED_TUNING.levelSensitivity = parseInt($('.pid_tuning input[name="sensitivity"]').val());
+            if (semver.lte(CONFIG.apiVersion, "1.43.0")) {   // 0.2.0 and older
+                ADVANCED_TUNING.levelAngleLimit = parseInt($('.pid_tuning input[name="angleLimit"]').val());
+                ADVANCED_TUNING.levelSensitivity = parseInt($('.pid_tuning input[name="sensitivity"]').val());
+            } else { //skip 1.44 & 1.45 not implemented and older angle UI broken
+                if (semver.gte(CONFIG.apiVersion, "1.45.0")) {               //TESTING--needs to be 1.46 for release
+                    //save new angle features
+                }
+            }
         }
 
         if (semver.gte(CONFIG.apiVersion, "1.36.0")) {
@@ -738,7 +756,9 @@ TABS.pid_tuning.initialize = function(callback) {
             ADVANCED_TUNING.errorBoost = $('input[name="errorBoost-number"]').val();
             ADVANCED_TUNING.errorBoostLimit = $('input[name="errorBoostLimit-number"]').val();
             ADVANCED_TUNING.throttleBoost = $('input[name="throttleBoost-number"]').val();
-            ADVANCED_TUNING.acroTrainerAngleLimit = $('input[name="acroTrainerAngleLimit-number"]').val();
+            if (semver.lt(CONFIG.apiVersion, "1.44.0")) {
+                ADVANCED_TUNING.acroTrainerAngleLimit = $('input[name="acroTrainerAngleLimit-number"]').val();
+            }
             ADVANCED_TUNING.feedforwardRoll = parseInt($('.pid_tuning .ROLL input[name="f"]').val());
             ADVANCED_TUNING.feedforwardPitch = parseInt($('.pid_tuning .PITCH input[name="f"]').val());
             ADVANCED_TUNING.feedforwardYaw = parseInt($('.pid_tuning .YAW input[name="f"]').val());
@@ -822,7 +842,7 @@ TABS.pid_tuning.initialize = function(callback) {
         });
 
         // Special case
-        if (semver.lt(CONFIG.apiVersion, "1.24.0")) {
+        if (semver.lt(CONFIG.apiVersion, "1.24.0") || semver.gt(CONFIG.apiVersion, "1.43.0") ) {
             $('#pid_sensitivity').hide();
         }
 
