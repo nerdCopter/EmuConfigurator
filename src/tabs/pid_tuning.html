@@ -1242,38 +1242,12 @@
                         <table class="filterTable">
                             <tr>
                                 <th colspan="2">
-                                    <div class="pid_mode">
-                                        <div i18n="pidTuningDTermLowpassFiltersGroup" />
-                                        <div class="helpicon cf_tip" i18n_title="pidTuningLowpassFilterHelp" />
-                                    </div>
-
-
+                                <div class="pid_mode">
+                                    <div i18n="pidTuningDTermLowpassFiltersGroup"></div>
+                                    <div class="helpicon cf_tip" i18n_title="pidTuningLowpassFilterHelp"></div>
+                                </div>
                                 </th>
                             </tr>
-
-                            <tr>
-                                <td>
-                                    <span class="groupSwitchValue">
-                                        <span class="inputSwitch"><input type="checkbox" id="dtermLowpassEnabled" class="toggle" /></span>
-                                        <div class="dtermLowpassFrequency">
-                                        <span class="inputValue"><input type="number" name="dtermLowpassFrequency" step="1" min="1" max="16000"/></span>
-                                        </div>
-                                        <div class="dtermLowpassFrequencyAxis">
-                                        <span class="inputValue"><input type="number" name="dtermLowpassFrequencyRoll" step="1" min="1" max="16000"/></span>
-                                        <span class="inputValue"><input type="number" name="dtermLowpassFrequencyPitch" step="1" min="1" max="16000"/></span>
-                                        <span class="inputValue"><input type="number" name="dtermLowpassFrequencyYaw" step="1" min="1" max="16000"/></span>
-                                        </div>
-                                    </span>
-                                </td>
-                                <td>
-                                    <div>
-                                        <label>
-                                            <span i18n="pidTuningDTermLowpassFrequency"></span>
-                                        </label>
-                                    </div>
-                                </td>
-                            </tr>
-
                             <tr>
                                 <td>
                                     <select name="dtermLowpassType">
@@ -1288,11 +1262,45 @@
                                     </div>
                                 </td>
                             </tr>
+                            <tr>
+
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <span class="inputSwitch"><input type="checkbox" id="dtermLowpassEnabled" class="toggle" /></span>
+                                </td>
+                                <td>
+
+                                </td>
+                            </tr>
+                                <tr>
+                                    <td>
+                                    <div>
+                                        <label>
+                                            <span i18n="pidTuningDTermLowpassFrequency"></span>
+                                        </label>
+                                    </div>
+                                    </td>
+                                </tr>
+                            <tr>
+                                <td>
+                                    <span class="groupSwitchValue">
+                                        <div class="dtermLowpassFrequency">
+                                            <span class="inputValue"><input type="number" name="dtermLowpassFrequency" step="1" min="1" max="16000"/></span>
+                                        </div>
+                                        <div class="dtermLowpassFrequencyAxis">
+                                            <tr class="ROLL"><span class="inputValue"><input type="number" name="dtermLowpassFrequencyRoll" step="1" min="1" max="16000"/></span></tr>
+                                            <tr class="PITCH"><span class="inputValue"><input type="number" name="dtermLowpassFrequencyPitch" step="1" min="1" max="16000"/></span></tr>
+                                            <tr class="YAW"><span class="inputValue"><input type="number" name="dtermLowpassFrequencyYaw" step="1" min="1" max="16000"/></span></tr>
+                                        </div>
+                                    </span>
+                                </td>
+                            </tr>
 
                             <tr class="dtermLowpass2">
                                 <td>
                                     <span class="groupSwitchValue">
-
                                         <span class="inputSwitch"><input type="checkbox" id="dtermLowpass2Enabled" class="toggle" /></span>
                                         <div class="dtermLowpass2Frequency">
                                         <span class="inputValue" id='test'><input type="number" name="dtermLowpass2Frequency" step="1" min="1" max="16000"/></span>
