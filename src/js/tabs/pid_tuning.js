@@ -138,7 +138,6 @@ TABS.pid_tuning.initialize = function(callback) {
         }
 
         if (semver.gte(CONFIG.apiVersion, "1.16.0") && semver.lt(CONFIG.apiVersion, "1.46.0")) {
-
             $('input[id="vbatpidcompensation"]').prop('checked', ADVANCED_TUNING.vbatPidCompensation !== 0);
         }else{
           console.log('vbat');
@@ -209,19 +208,30 @@ TABS.pid_tuning.initialize = function(callback) {
 
         $('.NEWANGLEUI').hide();
         $('.OLDANGLEUI').hide();
-        $('#showAllPids').hide(); //remove the useless button
+        //$('#showAllPids').hide(); //remove the useless button
         if ( semver.gte(CONFIG.apiVersion, "1.24.0") ) {
             $('.pid_tuning input[name="angleLimit"]').val(ADVANCED_TUNING.levelAngleLimit);
             $('.angleLimit').show();
+            console.log('show angle limit');
             if ( semver.lte(CONFIG.apiVersion, "1.43.0") ) {
+                // angle p.i.d loaded near beginning of function
                 $('.OLDANGLEUI').show();
                 $('.NEWANGLEUI').hide();
+                $('.pid_optional').show();
+                console.log('show OLDANGLEUI; hide NEWANGLEUI; show pid_Optional');
             } else { //skip 1.44 & 1.45 not implemented and older angle UI broken
                 if ( semver.gte(CONFIG.apiVersion, "1.46.0") ) {
-                    //Setting up for 0.3.0 release irregardless of MSP completion
-                    //Needs code to read MSP 1.46 angle features here
+                    $('.pid_tuning input[name="p_angle_high"]').val(ADVANCED_TUNING.p_angle_high);
+                    $('.pid_tuning input[name="p_angle_low"]').val(ADVANCED_TUNING.p_angle_low);
+                    $('.pid_tuning input[name="d_angle_high"]').val(ADVANCED_TUNING.d_angle_high);
+                    $('.pid_tuning input[name="d_angle_low"]').val(ADVANCED_TUNING.d_angle_low);
+                    $('.pid_tuning input[name="f_angle"]').val(ADVANCED_TUNING.f_angle);
+                    $('.pid_tuning input[name="d_angle_low"]').val(ADVANCED_TUNING.d_angle_low);
+                    //angle_expo forgotten in MSP :(
                     $('.OLDANGLEUI').hide();
                     $('.NEWANGLEUI').show();
+                    $('.pid_optional').show();
+                    console.log('hide OLDANGLEUI; show NEWANGLEUI; show pid_Optional');
                 }
             }
         }
@@ -720,8 +730,12 @@ TABS.pid_tuning.initialize = function(callback) {
         if ( semver.gte(CONFIG.apiVersion, "1.24.0") ) {
             ADVANCED_TUNING.levelAngleLimit = parseInt($('.pid_tuning input[name="angleLimit"]').val());
             if ( semver.gte(CONFIG.apiVersion, "1.46.0") ) {
-                //Setting up for 0.3.0 release irregardless of MSP completion
-                //Needs code to save MSP 1.46 angle features here
+                    ADVANCED_TUNING.p_angle_high = parseInt($('.pid_tuning input[name="p_angle_high"]').val());
+                    ADVANCED_TUNING.p_angle_low = parseInt($('.pid_tuning input[name="p_angle_low"]').val());
+                    ADVANCED_TUNING.d_angle_high = parseInt($('.pid_tuning input[name="d_angle_high"]').val());
+                    ADVANCED_TUNING.d_angle_low = parseInt($('.pid_tuning input[name="d_angle_low"]').val());
+                    ADVANCED_TUNING.f_angle = parseInt($('.pid_tuning input[name="f_angle"]').val());
+                    //angle_expo forgotten in MSP :(
             }
         }
 
@@ -839,11 +853,10 @@ TABS.pid_tuning.initialize = function(callback) {
     } //end function form_to_pid_and_rc()
 
     function showAllPids() {
-
         // Hide all optional elements
-        $('.pid_optional tr').hide(); // Hide all rows
-        $('.pid_optional table').hide(); // Hide tables
-        $('.pid_optional').hide(); // Hide general div
+        //$('.pid_optional tr').show(); // Hide all rows
+        //$('.pid_optional table').show(); // Hide tables
+        $('.pid_optional').show(); // Hide general div
 
         // Only show rows supported by the firmware
         PID_names.forEach(function(elementPid) {
@@ -856,6 +869,10 @@ TABS.pid_tuning.initialize = function(callback) {
     }
 
     function hideUnusedPids() {
+        // Hide all optional elements
+        //$('.pid_optional tr').hide(); // Hide all rows
+        //$('.pid_optional table').hide(); // Hide tables
+        $('.pid_optional').hide(); // Hide general div
 
         if (!have_sensor(CONFIG.activeSensors, 'acc')) {
             $('#pid_accel').hide();

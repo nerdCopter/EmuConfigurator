@@ -5123,6 +5123,9 @@
       "pidTuningImufSharpness": {
           "message": "IMU-F Sharpness"
       },
+      "pidTuningKalmanFilterSharpnessHelp": {
+          "message": "'imuf_sharpness' is the aggressiveness of the dynamic reduction on IMUF overfiltering. Default is 2500. Range is 1 to 16000"
+      },
       "pidTuningKalmanFilterQHelp": {
           "message": "IMU-F filter Q Coefficient. The amount of trust in gyro data accuracy (Higher value = more trust and less filtering)"
       },
