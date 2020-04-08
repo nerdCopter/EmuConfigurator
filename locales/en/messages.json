@@ -5082,6 +5082,9 @@
       "pidTuningImufW": {
           "message": "IMU-F W"
       },
+      "pidTuningImufSharpness": {
+          "message": "IMU-F Sharpness"
+      },
       "pidTuningKalmanFilterQHelp": {
           "message": "IMU-F filter Q Coefficient. The amount of trust in gyro data accuracy (Higher value = more trust and less filtering)"
       },

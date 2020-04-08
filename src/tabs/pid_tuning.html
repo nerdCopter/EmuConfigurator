@@ -482,13 +482,16 @@
                                 </td>
                             </tr>
 
-                            <tr>
+                            <tr class="vbatpidcompensation">
+
                                 <td><input type="checkbox" id="vbatpidcompensation" class="toggle" /></td>
                                 <td colspan="2">
                                     <span i18n="pidTuningVbatPidCompensation"></span>
                                     <div class="helpicon cf_tip" i18n_title="pidTuningVbatPidCompensationHelp"></div>
                                 </td>
+
                             </tr>
+
 
                             <tr class="smartfeedforward">
                                 <td><input type="checkbox" id="smartfeedforward" class="toggle" /></td>
@@ -1089,6 +1092,19 @@
                                                 <span i18n="pidTuningImufW"></span>
                                             </label>
                                             <div class="helpicon cf_tip" i18n_title="pidTuningKalmanFilterWHelp"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="imufSharpness">
+                                    <td>
+                                        <input id="imuf_sharpness" type="number" name="imuf_sharpness" step="1" min="1" max="16000"/>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <label>
+                                                <span i18n="pidTuningImufSharpness"></span>
+                                            </label>
+                                            <div class="helpicon cf_tip" i18n_title="pidTuningKalmanFilterSharpnessHelp"></div>
                                         </div>
                                     </td>
                                 </tr>

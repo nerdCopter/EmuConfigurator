@@ -137,8 +137,12 @@ TABS.pid_tuning.initialize = function(callback) {
             $('.pid_tuning input[name="rc_expo"]').attr("rowspan", "3");
         }
 
-        if (semver.gte(CONFIG.apiVersion, "1.16.0")) {
+        if (semver.gte(CONFIG.apiVersion, "1.16.0") && semver.lt(CONFIG.apiVersion, "1.46.0")) {
+
             $('input[id="vbatpidcompensation"]').prop('checked', ADVANCED_TUNING.vbatPidCompensation !== 0);
+        }else{
+          console.log('vbat');
+          $('.vbatpidcompensation').hide();
         }
 
         if (semver.gte(CONFIG.apiVersion, "1.16.0")) {
@@ -309,6 +313,12 @@ TABS.pid_tuning.initialize = function(callback) {
                 $('#imuf_pitch_q').val(IMUF_FILTER_CONFIG.imuf_pitch_q);
                 $('#imuf_yaw_q').val(IMUF_FILTER_CONFIG.imuf_yaw_q);
                 $('#imuf_w').val(IMUF_FILTER_CONFIG.imuf_w);
+                $('.imufSharpness').hide();
+                if (semver.gte(CONFIG.apiVersion, "1.46.0")) {
+                $('.imufSharpness').show();
+                console.log('sharpness' + IMUF_FILTER_CONFIG.imuf_sharpness);
+                $('#imuf_sharpness').val(IMUF_FILTER_CONFIG.imuf_sharpness);
+              }
                 if (CONFIG.boardIdentifier === "HESP" || CONFIG.boardIdentifier === "SX10" || CONFIG.boardIdentifier === "FLUX") {
                     $('#imuf_pitch_lpf_cutoff_hz').val(IMUF_FILTER_CONFIG.imuf_pitch_lpf_cutoff_hz);
                     $('#imuf_roll_lpf_cutoff_hz').val(IMUF_FILTER_CONFIG.imuf_roll_lpf_cutoff_hz);
@@ -753,6 +763,8 @@ TABS.pid_tuning.initialize = function(callback) {
                 IMUF_FILTER_CONFIG.imuf_pitch_q = parseInt($('#imuf_pitch_q').val());
                 IMUF_FILTER_CONFIG.imuf_yaw_q = parseInt($('#imuf_yaw_q').val());
                 IMUF_FILTER_CONFIG.imuf_w = parseInt($('#imuf_w').val());
+                IMUF_FILTER_CONFIG.imuf_sharpness = parseInt($('#imuf_sharpness').val());
+
                 if (CONFIG.boardIdentifier === "HESP" || CONFIG.boardIdentifier === "SX10" || CONFIG.boardIdentifier === "FLUX") {
                     IMUF_FILTER_CONFIG.imuf_roll_lpf_cutoff_hz = parseInt($('#imuf_roll_lpf_cutoff_hz').val());
                     IMUF_FILTER_CONFIG.imuf_pitch_lpf_cutoff_hz = parseInt($('#imuf_pitch_lpf_cutoff_hz').val());
