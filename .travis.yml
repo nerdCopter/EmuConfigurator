@@ -75,8 +75,10 @@ deploy:
     key: "${BINTRAY_API_KEY}"
     file: bintray-conf.json
     on:
-      tags: true
+      tags: false
       repo: emuflight/EmuConfigurator
+#      all_branches: false
+      branch: nerdCopter_20200408_test_travis_OSX
 
 after_deploy:
   - >
