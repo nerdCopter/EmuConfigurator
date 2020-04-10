@@ -57,8 +57,7 @@ deploy:
   - provider: releases
     all_branches: true
 #    edge: true
-    api_key:
-      secure: "bLcQLlZSKejWvliUCfdcqZvFoXZ1f0dsBMzEsFw1s3w98fpC9SHiINtiGeO60y7vQktPQ/19cGg1yFvlG1AIKxYlPIbsPWHcqfVDPZiPAlIpBn+URPkeQjK55E9+iJPdeS+ao4svvgdZMO4ebYy3IjdH6/lx7revXJv1qWc8xvD8HYY1QrTUjweyeurVUxk4DxWoo7JjcJ8QIP9eVKJwyNjD8e9CcNfDfcdNJ/2DflzRNixPRJbI8Osy/aAWLHRMD9/dRjNSiegHrdenC+PQyZPjIcKfStWPF0nq63Wx/uhanwXBeHm0Cit44eKlEedGF64m6tePR9NGzl1Rg7sK+eTo1YDXwG9l0iPyjjQmGjZNKBpg1ZrruLSEonOMfdUPn/6nFUSTo0YBCUSuQ7ihR/1julnibkxNLIIERTdQr99V7iSuLPyGCSrkJk0I36w1HTjMlwPpw8u6zmVTUv/y2EqC/qxa5/9aSLKpRtK/Qz3AHKOAxRrQAerevDB4ngYjYmgXBQj8gSDa6G92jzfPEX0x9U4n6CozRx6GA3JBb111idKOlxFupP/9zx38SfyPKHjT/JiItU84tDftVTtEZrEKFQz7dIn99rCEI0ITgwCjiiqMtQ14qUExILUKrIYwcppwVdmPBQP6e+LD3BSMwKFCHyA0Cl2TQFxQ+a2HII8="
+    api_key: "${ECNR}"
     #token: "${GITHUB_TOKEN}"
     #name: "${TRAVIS_TAG}"
     #body: "${CHANGELOG}"
