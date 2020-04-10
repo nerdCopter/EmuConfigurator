@@ -74,4 +74,4 @@ deploy:
     #  tags: true
 
 after_success:
-  - ./.travis/push.sh  #push to travisBuild repo
+  - bash -c './.travis/push.sh'  #push to travisBuild repo
