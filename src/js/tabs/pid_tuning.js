@@ -690,6 +690,17 @@ TABS.pid_tuning.initialize = function(callback) {
         RC_tuning.throttle_EXPO = parseFloat($('.throttle input[name="expo"]').val());
         RC_tuning.dynamic_THR_PID_P = parseFloat($('.tpa input[name="tpa_P"]').val());
         RC_tuning.dynamic_THR_breakpoint = parseInt($('.tpa input[name="tpa-breakpoint"]').val());
+
+        // rateDynamincs (Stick-pids)
+        if (semver.gte(CONFIG.apiVersion, "1.46.0")) {
+            (RC_tuning.rateSensCenter) = parseInt($('.rateDynamics input[name="rateSensCenter"]').val());
+            (RC_tuning.rateSensEnd) = parseInt($('.rateDynamics input[name="rateSensEnd"]').val());
+            (RC_tuning.rateCorrectionCenter) = parseInt($('.rateDynamics input[name="rateCorrectionCenter"]').val());
+            (RC_tuning.rateCorrectionEnd) = parseInt($('.rateDynamics input[name="rateCorrectionEnd"]').val());
+            (RC_tuning.rateWeightCenter) = parseInt($('.rateDynamics input[name="rateWeightCenter"]').val());
+            (RC_tuning.rateWeightEnd) = parseInt($('.rateDynamics input[name="rateWeightEnd"]').val());
+        }
+
         if (semver.lt(CONFIG.apiVersion, "1.44.0")) {
             FILTER_CONFIG.gyro_lowpass_hz = parseInt($('.pid_filter input[name="gyroLowpassFrequency"]').val());
             FILTER_CONFIG.dterm_lowpass_hz = parseInt($('.pid_filter input[name="dtermLowpassFrequency"]').val());
@@ -1511,6 +1522,18 @@ TABS.pid_tuning.initialize = function(callback) {
 
         if (useLegacyCurve) {
             $('.new_rates').hide();
+        }
+
+        // rateDynamincs (Stick-pids)
+        if (semver.gte(CONFIG.apiVersion, "1.46.0")) {
+            $('.rateDynamics input[name="rateSensCenter"]').val(RC_tuning.rateSensCenter);
+            $('.rateDynamics input[name="rateSensEnd"]').val(RC_tuning.rateSensEnd);
+            $('.rateDynamics input[name="rateCorrectionCenter"]').val(RC_tuning.rateCorrectionCenter);
+            $('.rateDynamics input[name="rateCorrectionEnd"]').val(RC_tuning.rateCorrectionEnd);
+            $('.rateDynamics input[name="rateWeightCenter"]').val(RC_tuning.rateWeightCenter);
+            $('.rateDynamics input[name="rateWeightEnd"]').val(RC_tuning.rateWeightEnd);
+        } else {
+            $('.rateDynamics').hide();
         }
 
         // Getting the DOM elements for curve display

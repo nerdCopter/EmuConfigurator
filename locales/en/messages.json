@@ -1663,6 +1663,12 @@
     "pidTuningRcExpo": {
         "message": "RC Expo"
     },
+    "pidTuningRateDynamics": {
+        "message": "Rate Dynamics"
+    },
+    "pidTuningRateDynamicsHelp": {
+        "message": "Rate Dynamics introduces stick feel variables including 'rate_center_[sensitivity|correction|weight]' and 'rate_end_[sensitivity|correction|weight]'. The above graph does not yet account for Rate Dynamics."
+    },
     "pidTuningTPA_P": {
         "message": "TPA P"
     },
