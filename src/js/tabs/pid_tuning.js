@@ -231,6 +231,10 @@ TABS.pid_tuning.initialize = function(callback) {
                     $('.OLDANGLEUI').hide();
                     $('.NEWANGLEUI').show();
                     $('.pid_optional').show();
+                    //removes 5th column which is Feedforward
+                    //$('#pid_main .pid_titlebar2 th').attr('colspan', 4);
+                    $('#pid_main').attr('colspan', 4);
+                    $('#pid_main .feedforward').hide();
                     console.log('hide OLDANGLEUI; show NEWANGLEUI; show pid_Optional');
                 }
             }
@@ -443,10 +447,24 @@ TABS.pid_tuning.initialize = function(callback) {
             $('.pid_tuning .YAW input[name="d"]').val(PIDs[2][2]); // PID Yaw D
 
             // Feedforward
-            $('.pid_tuning .ROLL input[name="f"]').val(ADVANCED_TUNING.feedforwardRoll);
-            $('.pid_tuning .PITCH input[name="f"]').val(ADVANCED_TUNING.feedforwardPitch);
-            $('.pid_tuning .YAW input[name="f"]').val(ADVANCED_TUNING.feedforwardYaw);
-            $('#pid_main .pid_titlebar2 th').attr('colspan', 5);
+            if (semver.lt(CONFIG.apiVersion, "1.46.0")) {
+                $('.pid_tuning .ROLL input[name="f"]').val(ADVANCED_TUNING.feedforwardRoll);
+                $('.pid_tuning .PITCH input[name="f"]').val(ADVANCED_TUNING.feedforwardPitch);
+                $('.pid_tuning .YAW input[name="f"]').val(ADVANCED_TUNING.feedforwardYaw);
+                var feedforwardTransitionNumberElement = $('input[name="feedforwardTransition-number"]');
+                feedforwardTransitionNumberElement.val(ADVANCED_TUNING.feedforwardTransition / 100);
+                //adds 5th column which is Feedforward
+                //$('#pid_main .pid_titlebar2 th').attr('colspan', 5);
+                $('#pid_main').attr('colspan', 5);
+                $('#pid_main .feedforward').show();
+                $('.feedforwardTransition').show();
+            } else {
+                //removes 5th column which is Feedforward
+                //$('#pid_main .pid_titlebar2 th').attr('colspan', 4);
+                $('#pid_main').attr('colspan', 4);
+                $('#pid_main .feedforward').hide();
+                $('.feedforwardTransition').hide();
+            }
 
             var feedforwardTransitionNumberElement = $('input[name="feedforwardTransition-number"]');
             feedforwardTransitionNumberElement.val(ADVANCED_TUNING.feedforwardTransition / 100);
@@ -795,10 +813,12 @@ TABS.pid_tuning.initialize = function(callback) {
             if (semver.lt(CONFIG.apiVersion, "1.44.0")) {
                 ADVANCED_TUNING.acroTrainerAngleLimit = $('input[name="acroTrainerAngleLimit-number"]').val();
             }
-            ADVANCED_TUNING.feedforwardRoll = parseInt($('.pid_tuning .ROLL input[name="f"]').val());
-            ADVANCED_TUNING.feedforwardPitch = parseInt($('.pid_tuning .PITCH input[name="f"]').val());
-            ADVANCED_TUNING.feedforwardYaw = parseInt($('.pid_tuning .YAW input[name="f"]').val());
-            ADVANCED_TUNING.feedforwardTransition = parseInt($('input[name="feedforwardTransition-number"]').val() * 100);
+            if (semver.lt(CONFIG.apiVersion, "1.46.0")) {
+                ADVANCED_TUNING.feedforwardRoll = parseInt($('.pid_tuning .ROLL input[name="f"]').val());
+                ADVANCED_TUNING.feedforwardPitch = parseInt($('.pid_tuning .PITCH input[name="f"]').val());
+                ADVANCED_TUNING.feedforwardYaw = parseInt($('.pid_tuning .YAW input[name="f"]').val());
+                ADVANCED_TUNING.feedforwardTransition = parseInt($('input[name="feedforwardTransition-number"]').val() * 100);
+            }
             ADVANCED_TUNING.antiGravityMode = $('select[id="antiGravityMode"]').val();
 
             if (CONFIG.boardIdentifier !== "HESP" && CONFIG.boardIdentifier !== "SX10" && CONFIG.boardIdentifier !== "FLUX" && semver.lt(CONFIG.apiVersion, "1.42.0")) {
