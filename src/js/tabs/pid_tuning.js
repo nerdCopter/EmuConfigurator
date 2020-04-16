@@ -227,7 +227,11 @@ TABS.pid_tuning.initialize = function(callback) {
                     $('.pid_tuning input[name="d_angle_low"]').val(ADVANCED_TUNING.d_angle_low);
                     $('.pid_tuning input[name="f_angle"]').val(ADVANCED_TUNING.f_angle);
                     $('.pid_tuning input[name="d_angle_low"]').val(ADVANCED_TUNING.d_angle_low);
-                    //angle_expo forgotten in MSP :(
+
+                    $('.pid_tuning input[name="angle_expo"]').val(ADVANCED_TUNING.angleExpo );
+                    $('.pid_tuning input[name="horizon_tilt_effect"]').val(ADVANCED_TUNING.horizonTiltEffect);
+                    $('.pid_tuning input[name="horizon_transition"]').val(ADVANCED_TUNING.horizonTransition);
+
                     $('.OLDANGLEUI').hide();
                     $('.NEWANGLEUI').show();
                     $('.pid_optional').show();
@@ -764,7 +768,10 @@ TABS.pid_tuning.initialize = function(callback) {
                     ADVANCED_TUNING.d_angle_high = parseInt($('.pid_tuning input[name="d_angle_high"]').val());
                     ADVANCED_TUNING.d_angle_low = parseInt($('.pid_tuning input[name="d_angle_low"]').val());
                     ADVANCED_TUNING.f_angle = parseInt($('.pid_tuning input[name="f_angle"]').val());
-                    //angle_expo forgotten in MSP :(
+
+                    ADVANCED_TUNING.angleExpo = parseInt($('.pid_tuning input[name="angle_expo"]').val());
+                    ADVANCED_TUNING.horizonTiltEffect = parseInt($('.pid_tuning input[name="horizon_tilt_effect"]').val());
+                    ADVANCED_TUNING.horizonTransition =  arseInt($('.pid_tuning input[name="horizon_transition"]').val());
             }
         }
 
