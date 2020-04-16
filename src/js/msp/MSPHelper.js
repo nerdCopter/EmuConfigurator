@@ -1100,8 +1100,10 @@ MspHelper.prototype.process_data = function(dataHandler) {
                                     ADVANCED_TUNING.f_angle = data.readU16();
                                     ADVANCED_TUNING.p_angle_high = data.readU8();
                                     ADVANCED_TUNING.d_angle_high = data.readU8();
-
-                                  }
+                                    ADVANCED_TUNING.horizonTransition = data.readU8();
+                                    ADVANCED_TUNING.horizonTiltEffect = data.readU8();
+                                    ADVANCED_TUNING.angleExpo = data.readU8();
+                                    }
                                     ADVANCED_TUNING.antiGravityMode  = data.readU8();
                                     ADVANCED_TUNING.itermRelaxCutoff = data.readU8();
 
@@ -1943,11 +1945,14 @@ MspHelper.prototype.crunch = function(code) {
                                       .push16(ADVANCED_TUNING.feedforwardPitch)
                                       .push16(ADVANCED_TUNING.feedforwardYaw);
                                     }else{
-                                          buffer.push8(ADVANCED_TUNING.p_angle_low)
+                                        buffer.push8(ADVANCED_TUNING.p_angle_low)
                                         .push8(ADVANCED_TUNING.d_angle_low)
                                         .push16(ADVANCED_TUNING.f_angle)
                                         .push8(ADVANCED_TUNING.p_angle_high)
-                                        .push8(ADVANCED_TUNING.d_angle_high);
+                                        .push8(ADVANCED_TUNING.d_angle_high)
+                                        .push8(ADVANCED_TUNING.horizonTransition)
+                                        .push8(ADVANCED_TUNING.horizonTiltEffect)
+                                        .push8(ADVANCED_TUNING.angleExpo);
 
                                       }
                                     buffer.push8(ADVANCED_TUNING.antiGravityMode)
