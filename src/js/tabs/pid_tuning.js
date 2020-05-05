@@ -256,8 +256,6 @@ TABS.pid_tuning.initialize = function(callback) {
                     $('.pid_tuning input[name="d_angle_high"]').val(ADVANCED_TUNING.d_angle_high);
                     $('.pid_tuning input[name="d_angle_low"]').val(ADVANCED_TUNING.d_angle_low);
                     $('.pid_tuning input[name="f_angle"]').val(ADVANCED_TUNING.f_angle);
-                    $('.pid_tuning input[name="d_angle_low"]').val(ADVANCED_TUNING.d_angle_low);
-
                     $('.pid_tuning input[name="angle_expo"]').val(ADVANCED_TUNING.angleExpo );
                     $('.pid_tuning input[name="horizon_tilt_effect"]').val(ADVANCED_TUNING.horizonTiltEffect);
                     $('.pid_tuning input[name="horizon_transition"]').val(ADVANCED_TUNING.horizonTransition);
@@ -1275,24 +1273,24 @@ TABS.pid_tuning.initialize = function(callback) {
         var save_and_reboot = false;
 
         $('#pid-tuning .presetBuild').hide();
-        
+
         $('.tab-pid_tuning select[name="preset"]').change(function() {
             var presetSelected = $('.tab-pid_tuning select[name="preset"]').val();
-            
+
             if (presetSelected == "default") {
                 //resetProfile();
-                
+
                 pid_and_rc_to_form();
                 save_and_reboot = false;
             } else {
                 // preset warning message
                 save_and_reboot = false;
-                
-                var presetNote = presetJson[presetSelected]['preset_note'];  
-                var presetBuildMotors = presetJson[presetSelected]['build_motors'];  
-                var presetBuildFrame = presetJson[presetSelected]['build_frame'];  
-                var presetBuildProps = presetJson[presetSelected]['build_props'];  
-                var presetBuildBattery = presetJson[presetSelected]['build_battery'];  
+
+                var presetNote = presetJson[presetSelected]['preset_note'];
+                var presetBuildMotors = presetJson[presetSelected]['build_motors'];
+                var presetBuildFrame = presetJson[presetSelected]['build_frame'];
+                var presetBuildProps = presetJson[presetSelected]['build_props'];
+                var presetBuildBattery = presetJson[presetSelected]['build_battery'];
 
                 const warningPreset = '<span class=\"message-negative\">IMPORTANT:</span> <br>Test each preset with hover. Check motors temperature and check for problems. Not all presets will work with your quad. Use at your own risk. <br><br>';
                 var presetMessage =  warningPreset + presetNote + '<br><br> Preset was made based on such components: <br> <b> • MOTORS: </b>' + presetBuildMotors + '<br> <b> • FRAME: </b>' + presetBuildFrame  + '<br> <b> • PROPS: </b>' + presetBuildProps + '<br> <b> • BATTERY: </b>' + presetBuildBattery ;
@@ -1370,7 +1368,7 @@ TABS.pid_tuning.initialize = function(callback) {
                     $('.smartDTermWitchBox input[name="smartdTermRoll"]').val(presetJson[presetSelected]['smart_dterm_smoothing_roll']);
                     $('.smartDTermWitchBox input[name="smartdTermPitch"]').val(presetJson[presetSelected]['smart_dterm_smoothing_pitch']);
                     $('.smartDTermWitchBox input[name="smartdTermYaw"]').val(presetJson[presetSelected]['smart_dterm_smoothing_yaw']);
-        
+
                     $('.smartDTermWitchBox input[name="witchcraftRoll"]').val(presetJson[presetSelected]['witchcraft_roll']);
                     $('.smartDTermWitchBox input[name="witchcraftPitch"]').val(presetJson[presetSelected]['witchcraft_pitch']);
                     $('.smartDTermWitchBox input[name="witchcraftYaw"]').val(presetJson[presetSelected]['witchcraft_yaw']);
