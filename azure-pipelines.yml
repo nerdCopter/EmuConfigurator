@@ -22,7 +22,7 @@ jobs:
   steps:
   - task: NodeTool@0
     inputs:
-      versionSpec: '8.11.2'    
+      versionSpec: '8.11.2'
     displayName: 'Install Node.js'
 
   - script: npm install -g npm@6.0.1
@@ -41,7 +41,7 @@ jobs:
 
   - task: PublishPipelineArtifact@0
     displayName: 'Publish Windows release'
-    inputs: 
+    inputs:
       artifactName: emuflight-configurator-windows
       targetPath: '$(System.DefaultWorkingDirectory)/release'
 
@@ -53,7 +53,7 @@ jobs:
   steps:
   - task: NodeTool@0
     inputs:
-      versionSpec: '8.11.2'    
+      versionSpec: '8.11.2'
     displayName: 'Install Node.js'
 
   - script: npm install -g npm@6.0.1
@@ -70,7 +70,7 @@ jobs:
 
   - task: PublishPipelineArtifact@0
     displayName: 'Publish Linux release'
-    inputs: 
+    inputs:
       artifactName: emuflight-configurator-linux
       targetPath: '$(System.DefaultWorkingDirectory)/release'
 
@@ -82,7 +82,7 @@ jobs:
   steps:
   - task: NodeTool@0
     inputs:
-      versionSpec: '8.11.2'    
+      versionSpec: '8.11.2'
     displayName: 'Install Node.js'
 
   - script: npm install -g npm@6.0.1
@@ -99,6 +99,6 @@ jobs:
 
   - task: PublishPipelineArtifact@0
     displayName: 'Publish MacOS release'
-    inputs: 
+    inputs:
       artifactName: emuflight-configurator-macos
       targetPath: '$(System.DefaultWorkingDirectory)/release'
