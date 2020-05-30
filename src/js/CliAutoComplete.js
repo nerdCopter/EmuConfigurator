@@ -16,6 +16,7 @@ CliAutoComplete.isEnabled = function() {
 };
 
 CliAutoComplete.isBuilding = function() {
+    console.log('CliAutoComplete.isBuilding');
     return this.builder.state != 'reset' && this.builder.state != 'done' && this.builder.state != 'fail';
 };
 
@@ -27,6 +28,7 @@ CliAutoComplete.isOpen = function() {
  * @param {boolean} force - Forces AutoComplete to be shown even if the matching strategy has less that minChars input
  */
 CliAutoComplete.openLater = function(force) {
+    console.log('CliAutoComplete.openLater');
     var self = this;
     setTimeout(function() {
         self.forceOpen = !!force;
@@ -36,6 +38,7 @@ CliAutoComplete.openLater = function(force) {
 };
 
 CliAutoComplete.setEnabled = function(enable) {
+    console.log('CliAutoComplete.setEnabled');
     if (this.configEnabled != enable) {
         this.configEnabled = enable;
 
@@ -51,6 +54,7 @@ CliAutoComplete.setEnabled = function(enable) {
 };
 
 CliAutoComplete.initialize = function($textarea, sendLine, writeToOutput) {
+    console.log('CliAutoComplete.initialize');
     this.$textarea = $textarea;
     this.forceOpen = false;
     this.sendLine = sendLine;
@@ -59,12 +63,14 @@ CliAutoComplete.initialize = function($textarea, sendLine, writeToOutput) {
 };
 
 CliAutoComplete.cleanup = function() {
+    console.log('CliAutoComplete.cleanup');
     this.$textarea.textcomplete('destroy');
     this.builder.state = 'reset';
     this.builder.numFails = 0;
 };
 
 CliAutoComplete._builderWatchdogTouch = function() {
+    console.log('CliAutoComplete._builderWatchdogTouch');
     var self = this;
 
     this._builderWatchdogStop();
@@ -83,10 +89,12 @@ CliAutoComplete._builderWatchdogTouch = function() {
 };
 
 CliAutoComplete._builderWatchdogStop = function() {
+    console.log('CliAutoComplete._builderWatchdogStop');
     GUI.timeout_remove('autocomplete_builder_watchdog');
 };
 
 CliAutoComplete.builderStart = function() {
+    console.log('CliAutoComplete.builderStart');
     if (this.builder.state == 'reset') {
         this.cache = {
             commands: [],
@@ -109,6 +117,7 @@ CliAutoComplete.builderStart = function() {
 };
 
 CliAutoComplete.builderParseLine = function(line) {
+    console.log('CliAutoComplete.builderParseLine');
     var cache = this.cache;
     var builder = this.builder;
     var m;
@@ -191,6 +200,7 @@ CliAutoComplete.builderParseLine = function(line) {
  * Initializes textcomplete with all the autocomplete strategies
  */
 CliAutoComplete._initTextcomplete = function() {
+    console.log('CliAutoComplete._initTextcomplete');
     var sendOnEnter = false;
     var self = this;
     var $textarea = this.$textarea;
