@@ -1970,6 +1970,7 @@ TABS.pid_tuning.initialize = function(callback) {
                         COPY_PROFILE.srcProfile = CONFIG.profile;
 
                         MSP.send_message(MSPCodes.MSP_COPY_PROFILE, mspHelper.crunch(MSPCodes.MSP_COPY_PROFILE), false, close_dialog);
+                        console.log("copy profile. type:"+COPY_PROFILE.type+" from:"+COPY_PROFILE.srcProfile+" to:"+COPY_PROFILE.dstProfile);
 
                         break;
 
@@ -1979,6 +1980,7 @@ TABS.pid_tuning.initialize = function(callback) {
                         COPY_PROFILE.srcProfile = CONFIG.rateProfile;
 
                         MSP.send_message(MSPCodes.MSP_COPY_PROFILE, mspHelper.crunch(MSPCodes.MSP_COPY_PROFILE), false, close_dialog);
+                        console.log("copy profile. type:"+COPY_PROFILE.type+" from:"+COPY_PROFILE.srcProfile+" to:"+COPY_PROFILE.dstProfile);
 
                         break;
 
