@@ -759,14 +759,20 @@ function listReleaseTasks(done) {
     }
 
     if (platforms.indexOf('win32') !== -1) {
+        releaseTasks.push(function release_win32_zip() {
+            return release_zip('win32_standalone');
+        });
         releaseTasks.push(function release_win32(done) {
-            return release_win('win32', done);
+            return release_win('win32_installer', done);
         });
     }
 
     if (platforms.indexOf('win64') !== -1) {
+        releaseTasks.push(function release_win64_zip() {
+            return release_zip('win64_standalone');
+        });
         releaseTasks.push(function release_win64(done) {
-            return release_win('win64', done);
+            return release_win('win64_installer', done);
         });
     }
 
