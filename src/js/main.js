@@ -163,6 +163,8 @@ function startProcess() {
         checkForConfiguratorUpdates();
     }
 
+    notifyDJIWarning();
+
     // log webgl capability
     // it would seem the webgl "enabling" through advanced settings will be ignored in the future
     // and webgl will be supported if gpu supports it by default (canary 40.0.2175.0), keep an eye on this one
@@ -551,6 +553,16 @@ function checkForConfiguratorUpdates() {
     releaseChecker.loadReleaseData(notifyOutdatedVersion);
 }
 
+function notifyDJIWarning() {
+    //ConfigStorage.set({'hideDJIWarning': false}); //debug testing only
+    ConfigStorage.get('hideDJIWarning', function (result) {
+        if (!result.hideDJIWarning) {
+            ConfigStorage.set({'hideDJIWarning': true});
+            showErrorDialog('WARNING: DJI components bypass all Configurator arming security checks. REMOVE PROPELLERS and do NOT attempt to arm while battery is plugged; disarming may fail.  Always use a Smoke-Stopper when connected to the Configurator as an emergency safety measure for uncontrolled motor spin-up if operating with DJI controls. This will be mitigated in some future release.');
+        }
+    });
+}
+
 function notifyOutdatedVersion(releaseData) {
     ConfigStorage.get('checkForConfiguratorUnstableVersions', function (result) {
         var showUnstableReleases = false;
@@ -588,6 +600,8 @@ function notifyOutdatedVersion(releaseData) {
             });
 
             dialog.showModal();
+
+            ConfigStorage.set({'hideDJIWarning': false});
         }
     });
 }
