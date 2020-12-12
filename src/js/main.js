@@ -38,7 +38,7 @@ var helioUrlv030 = "https://raw.githubusercontent.com/emuflight/emuflight-preset
 
 //testing only
 var nonHelioUrlv030 = "https://raw.githubusercontent.com/nerdCopter/emuflight-presets_nerdRepo/20201211_SkyLion_0.3.2_presets/presets-0.3.0/presets-nonHELIO.json";
-var helioUrlv030 = "https://raw.githubusercontent.com/nerdCopter/emuflight-presets_nerdRepo/20201211_SkyLion_0.3.2_presets/presets-0.3.0/presets-HELIO.json";
+var helioUrlv030    = "https://raw.githubusercontent.com/nerdCopter/emuflight-presets_nerdRepo/20201211_SkyLion_0.3.2_presets/presets-0.3.0/presets-HELIO.json";
 
 
 // TODO: migrate to a function to get rid of code duplication
