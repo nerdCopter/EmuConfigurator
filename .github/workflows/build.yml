@@ -48,27 +48,28 @@ jobs:
           echo "Actor: ${{ github.ACTOR }}"
           echo "Repo: ${{ github.REPOSITORY }}"
       # build stuff
-      - name: yarn install
-        continue-on-error: false
-        run: yarn install
-      - name: yarn gulp clean-release
-        run: yarn gulp clean-release
       - name: yarn gulp release --linux64
         continue-on-error: false
         if: ${{ startsWith(matrix.os, 'ubuntu') }}
         run: |
           sudo apt install -y rpm
+          yarn install
+          yarn gulp clean-release
           yarn gulp release --linux64
       - name: yarn gulp release --osx64
         continue-on-error: false
         if: ${{ startsWith(matrix.os, 'macos') }}
         run: |
           yarn add fs-xattr
+          yarn install
+          yarn gulp clean-release
           yarn gulp release --osx64
       - name: yarn gulp release  --win32 --win64
         continue-on-error: false
         if: ${{ startsWith(matrix.os, 'windows') }}
         run: |
+          yarn install
+          yarn gulp clean-release
           yarn gulp release  --win32 --win64
       - name: Upload Artifacts
         uses: actions/upload-artifact@master
