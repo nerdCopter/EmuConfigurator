@@ -36,6 +36,8 @@ jobs:
         uses: actions/setup-node@master
         with:
           node-version: '12'
+      - run: npm install
+      - run: npm test
       # for debugging
       - name: show variables
         continue-on-error: true
@@ -49,6 +51,7 @@ jobs:
           echo "Repo: ${{ github.REPOSITORY }}"
       # build stuff
       - name: yarn install
+        continue-on-error: false
         run: yarn install
       - name: yarn gulp clean-release
         run: yarn gulp clean-release
@@ -66,7 +69,9 @@ jobs:
       - name: yarn gulp release  --win32 --win64
         continue-on-error: false
         if: ${{ startsWith(matrix.os, 'windows') }}
-        run: yarn gulp release  --win32 --win64
+        run: |
+          npm install fs-xattr
+          yarn gulp release  --win32 --win64
       - name: Upload Artifacts
         uses: actions/upload-artifact@master
         with:
