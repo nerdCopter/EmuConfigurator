@@ -68,7 +68,7 @@ jobs:
         continue-on-error: false
         if: ${{ startsWith(matrix.os, 'windows') }}
         run: |
-          npm install fs-xattr
+          yarn install fs-xattr
           yarn gulp release  --win32 --win64
       - name: Upload Artifacts
         uses: actions/upload-artifact@master
