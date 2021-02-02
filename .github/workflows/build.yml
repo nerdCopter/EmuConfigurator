@@ -33,7 +33,7 @@ jobs:
           echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
       - name: setup node
         continue-on-error: false
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@master
         with:
           node-version: '12'
       # for debugging
@@ -52,8 +52,6 @@ jobs:
         run: yarn install
       - name: yarn gulp clean-release
         run: yarn gulp clean-release
-      - name: node 12
-        run: nvm install 12
       - name: yarn gulp release --linux64
         continue-on-error: false
         if: ${{ startsWith(matrix.os, 'ubuntu') }}
