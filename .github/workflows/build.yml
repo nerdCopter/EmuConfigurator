@@ -52,6 +52,8 @@ jobs:
         run: yarn install
       - name: yarn gulp clean-release
         run: yarn gulp clean-release
+      - name: node 12
+        run: nvm install 12
       - name: yarn gulp release --linux64
         continue-on-error: false
         if: ${{ startsWith(matrix.os, 'ubuntu') }}
