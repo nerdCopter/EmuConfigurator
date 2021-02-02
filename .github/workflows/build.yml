@@ -63,12 +63,12 @@ jobs:
         continue-on-error: false
         if: ${{ startsWith(matrix.os, 'macos') }}
         run: |
+          yarn add fs-xattr
           yarn gulp release --osx64
       - name: yarn gulp release  --win32 --win64
         continue-on-error: false
         if: ${{ startsWith(matrix.os, 'windows') }}
         run: |
-          yarn install fs-xattr
           yarn gulp release  --win32 --win64
       - name: Upload Artifacts
         uses: actions/upload-artifact@master
