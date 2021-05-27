@@ -91,6 +91,7 @@
     "yarn": "^1.22.10"
   },
   "optionalDependencies": {
+    "fs-xattr": "^0.4.0",
     "gulp-appdmg": "^1.0.3"
   }
 }
