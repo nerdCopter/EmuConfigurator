@@ -1079,8 +1079,14 @@ MspHelper.prototype.process_data = function(dataHandler) {
                 IMUF_FILTER_CONFIG.imuf_pitch_q = data.readU16();
                 IMUF_FILTER_CONFIG.imuf_yaw_q = data.readU16();
                 IMUF_FILTER_CONFIG.imuf_w = data.readU16();
-                if (semver.gte(CONFIG.apiVersion, "1.46.0")) {  //will need to mod for MSP 1.51, but not until merged master and MSP for master fixed.
-                  IMUF_FILTER_CONFIG.imuf_sharpness = data.readU16();
+                if (semver.gte(CONFIG.apiVersion, "1.46.0")) {
+                    //MSP 1.51
+                    if (semver.lt(CONFIG.apiVersion, "1.51.0")) {
+                        IMUF_FILTER_CONFIG.imuf_sharpness = data.readU16();
+                    //end MSP 1.51
+                    } else {
+                        IMUF_FILTER_CONFIG.imuf_ptn_order = data.readU16();
+                    }
                 }
                 if (CONFIG.boardIdentifier === "HESP" || CONFIG.boardIdentifier === "SX10" || CONFIG.boardIdentifier === "FLUX") {
                     IMUF_FILTER_CONFIG.imuf_roll_lpf_cutoff_hz = data.readU16();
@@ -2029,8 +2035,14 @@ MspHelper.prototype.crunch = function(code) {
             buffer.push16(IMUF_FILTER_CONFIG.imuf_pitch_q);
             buffer.push16(IMUF_FILTER_CONFIG.imuf_yaw_q);
             buffer.push16(IMUF_FILTER_CONFIG.imuf_w);
-            if (semver.gte(CONFIG.apiVersion, "1.46.0")) { //will need to mod for MSP 1.51, but not until merged master and MSP for master fixed.
-                buffer.push16(IMUF_FILTER_CONFIG.imuf_sharpness);
+            if (semver.gte(CONFIG.apiVersion, "1.46.0")) {
+                 //MSP 1.51
+                if (semver.lt(CONFIG.apiVersion, "1.51.0")) {
+                    buffer.push16(IMUF_FILTER_CONFIG.imuf_ptn_order);
+                //end MSP 1.51
+                } else {
+                    buffer.push16(IMUF_FILTER_CONFIG.imuf_sharpness);
+                }
             }
             if (CONFIG.boardIdentifier === "HESP" || CONFIG.boardIdentifier === "SX10" || CONFIG.boardIdentifier === "FLUX") {
                 buffer.push16(IMUF_FILTER_CONFIG.imuf_roll_lpf_cutoff_hz);
