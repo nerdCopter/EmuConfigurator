@@ -479,7 +479,7 @@ TABS.pid_tuning.initialize = function(callback) {
                         console.log("IMUF_FILTER_CONFIG.imufCurrentVersion >=256: "+IMUF_FILTER_CONFIG.imufCurrentVersion)
                         $('#imuf_ptn_order').val(IMUF_FILTER_CONFIG.imuf_ptn_order);
                     } else {
-                        $('imufPTNorder').hide();
+                        $('.imufPTNorder').hide();
                         console.log("IMUF_FILTER_CONFIG.imufCurrentVersion <256: "+IMUF_FILTER_CONFIG.imufCurrentVersion)
                     }
                     //end MSP 1.51
@@ -507,6 +507,7 @@ TABS.pid_tuning.initialize = function(callback) {
                     $('.IMUFLPFroll').hide();
                     $('.IMUFLPFpitch').hide();
                     $('.IMUFLPFyaw').hide();
+                    $('.imufPTNorder').hide();
                     console.log("PIDTAB: non-Helio hide IMUF LPF");
 
                 }
