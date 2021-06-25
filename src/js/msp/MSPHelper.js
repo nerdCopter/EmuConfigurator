@@ -60,6 +60,8 @@ MspHelper.prototype.reorderPwmProtocols = function (protocol) {
 MspHelper.prototype.process_data = function(dataHandler) {
     var self = this;
 
+  console.log("reading MSP...")
+
     var data = dataHandler.dataView; // DataView (allowing us to view arrayBuffer as struct/union)
     var code = dataHandler.code;
     if (code === 0) {
@@ -1098,6 +1100,11 @@ MspHelper.prototype.process_data = function(dataHandler) {
                 }
                 break;
 
+            case MSPCodes.MSP_IMUF_INFO:
+                IMUF_FILTER_CONFIG.imufCurrentVersion = data.readU16();
+                console.log("MSP read IMUF_FILTER_CONFIG.imufCurrentVersion "+IMUF_FILTER_CONFIG.imufCurrentVersion)
+            break;
+
             case MSPCodes.MSP_SET_PID_ADVANCED:
                 console.log("Advanced PID settings saved");
                 break;
@@ -1579,6 +1586,9 @@ MspHelper.prototype.process_data = function(dataHandler) {
 MspHelper.prototype.crunch = function(code) {
     var buffer = [];
     var self = this;
+
+    console.log("Writing MSP...")
+
     switch (code) {
 
         case MSPCodes.MSP_SET_FEATURE_CONFIG:
