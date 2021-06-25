@@ -5472,6 +5472,14 @@
       "pidTuningImufSharpness": {
           "message": "IMU-F Sharpness"
       },
+      "COMMENT": {"message": "MSP 1.51"},
+      "pidTuningImufPTNOrder": {
+          "message": "IMU-F PT(n) order"
+      },
+      "pidTuningImufPTNOrderHelp": {
+          "message": "Helio IMU-F PT(n) order requires IMUF_256."
+      },
+      "COMMENT": {"message": "end MSP 1.51"},
       "pidTuningKalmanFilterSharpnessHelp": {
           "message": "'imuf_sharpness' is the aggressiveness of the dynamic reduction of IMUF overfiltering. Higher values dynamically relax IMUF filtering more, but only when needed. Default is 2500. Range is 1 to 16000. 0 is OFF for versions that allow such."
       },
