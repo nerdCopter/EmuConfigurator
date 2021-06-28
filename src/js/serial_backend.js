@@ -434,7 +434,11 @@ function read_serial(info) {
     if (!CONFIGURATOR.cliActive) {
         MSP.read(info);
     } else if (CONFIGURATOR.cliActive) {
-        TABS.cli.read(info);
+        try {
+            TABS.cli.read(info);
+        } catch {
+            console.log('ERROR CAUGHT: TABS.cli.read(info): '+info.data);
+        }
     }
 }
 

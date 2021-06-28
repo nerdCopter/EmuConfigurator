@@ -39,11 +39,15 @@ CliAutoComplete.setEnabled = function(enable) {
     if (this.configEnabled != enable) {
         this.configEnabled = enable;
 
+        console.log("CliAutoComplete.setEnabled: "+enable);
+
         if (CONFIGURATOR.cliActive && CONFIGURATOR.cliValid) {
             // cli is already open
             if (this.isEnabled()) {
                 this.builderStart();
+                console.log("CliAutoComplete.setEnabled builderStart");
             } else if (!this.isEnabled() && !this.isBuilding()) {
+                console.log("CliAutoComplete.setEnabled cleanup");
                 this.cleanup();
             }
         }
@@ -115,12 +119,16 @@ CliAutoComplete.builderParseLine = function(line) {
     var builder = this.builder;
     var m;
 
+    console.log('CliAutoComplete.builderParseLine: line: '+line);
     this._builderWatchdogTouch();
 
     if (line.indexOf(builder.sentinel) !== -1) {
         // got sentinel
+        console.log('CliAutoComplete.builderParseLine: got sentinal: '+builder.sentinel);
         var command = builder.commandSequence.shift();
 
+
+        console.log('CliAutoComplete.builderParseLine: command: '+command);
         if (command && this.configEnabled) {
             // next state
             builder.state = 'parse-' + command;
@@ -128,6 +136,7 @@ CliAutoComplete.builderParseLine = function(line) {
             this.sendLine(builder.sentinel);
         } else {
             // done
+            console.log('CliAutoComplete.builderParseLine: got sentinal, done');
             this._builderWatchdogStop();
 
             if (!this.configEnabled) {
@@ -135,19 +144,30 @@ CliAutoComplete.builderParseLine = function(line) {
                 this.writeToOutput('Cancelled!<br># ');
                 this.cleanup();
             } else {
+                console.log('CliAutoComplete.builderParseLine: else sort sort sort sort keys.sort');
+                console.log('CliAutoComplete.builderParseLine: setting.sort');
                 cache.settings.sort();
+                console.log('CliAutoComplete.builderParseLine: commands.sort');
                 cache.commands.sort();
+                console.log('CliAutoComplete.builderParseLine: features.sort');
                 cache.feature.sort();
+                console.log('CliAutoComplete.builderParseLine: beeper.sort');
                 cache.beeper.sort();
+                console.log('CliAutoComplete.builderParseLine: Object.keys(cache.resourcesCount).sort');
                 cache.resources = Object.keys(cache.resourcesCount).sort();
 
+                console.log('CliAutoComplete.builderParseLine: _initTextcomplete');
                 this._initTextcomplete();
+                console.log('CliAutoComplete.builderParseLine: writeToOutput: Done!');
                 this.writeToOutput('Done!<br># ');
+                console.log('CliAutoComplete.builderParseLine: writeToOutput: build.state=done');
                 builder.state = 'done';
             }
+            console.log('CliAutoComplete.builderParseLine: build:stop');
             $(this).trigger('build:stop');
         }
     } else {
+        console.log('CliAutoComplete.builderParseLine: no sentinal. builder.state: '+builder.state);
         switch (builder.state) {
             case 'parse-help':
                 if (m = line.match(/^(\w+)/)) {
@@ -185,6 +205,8 @@ CliAutoComplete.builderParseLine = function(line) {
                     cache.mixers = ['list'].concat(m[1].trim().split(/\s+/));
                 }
                 break;
+            default:
+               break;
         }
     }
 };

@@ -364,8 +364,10 @@ function writeToOutput(text) {
 
 function writeLineToOutput(text) {
     if (CliAutoComplete.isBuilding()) {
-        CliAutoComplete.builderParseLine(text);
         console.log('CliAutoComplete.isBuilding()=true suppressing output');
+        console.log('CliAutoComplete.builderParseLine('+text+')');
+        CliAutoComplete.builderParseLine(text);
+        console.log('CliAutoComplete.builderParseLine('+text+') succeeded.');
         return; // suppress output if in building state
     }
 
@@ -391,14 +393,18 @@ TABS.cli.read = function (readInfo) {
         Windows understands (both) CRLF
         Chrome OS currently unknown
     */
+   console.log('TABS.cli.read. 0');
     var data = new Uint8Array(readInfo.data),
         validateText = "",
         sequenceCharsToSkip = 0;
 
+    console.log('TABS.cli.read. 1');
     for (var i = 0; i < data.length; i++) {
         const currentChar = String.fromCharCode(data[i]);
 
+    console.log('TABS.cli.read. 2');
         if (!CONFIGURATOR.cliValid) {
+            console.log('TABS.cli.read. cliValid');
             // try to catch part of valid CLI enter message
             validateText += currentChar;
             writeToOutput(currentChar);
@@ -408,44 +414,57 @@ TABS.cli.read = function (readInfo) {
         const escapeSequenceCode = 27;
         const escapeSequenceCharLength = 3;
         if (data[i] == escapeSequenceCode && !sequenceCharsToSkip) { // ESC + other
+            console.log('TABS.cli.read. 3');
             sequenceCharsToSkip = escapeSequenceCharLength;
         }
 
         if (sequenceCharsToSkip) {
+            console.log('TABS.cli.read. 4');
             sequenceCharsToSkip--;
             continue;
         }
 
         switch (data[i]) {
             case lineFeedCode:
-                if (GUI.operating_system === "Windows") {
+                console.log('TABS.cli.read. linefeedCode');
+                if (1) { //GUI.operating_system === "Windows") {
+                    console.log('this.cliBuffer '+this.cliBuffer);
                     writeLineToOutput(this.cliBuffer);
                     this.cliBuffer = "";
+                    console.log('this.cliBuffer '+this.cliBuffer);
                 }
                 break;
             case carriageReturnCode:
-                if (GUI.operating_system !== "Windows") {
+                console.log('TABS.cli.read. carriageReturnCode');
+                if (1) { //GUI.operating_system !== "Windows") {
+                    console.log('this.cliBuffer '+this.cliBuffer);
                     writeLineToOutput(this.cliBuffer);
                     this.cliBuffer = "";
+                    console.log('this.cliBuffer '+this.cliBuffer);
                 }
                 break;
             case 60:
-                this.cliBuffer += '&lt';
+                console.log('TABS.cli.read. lt');
+                this.cliBuffer += '';//'&lt';
                 break;
             case 62:
-                this.cliBuffer += '&gt';
+                console.log('TABS.cli.read. gt');
+                this.cliBuffer += '';//'&gt';
                 break;
             case backspaceCode:
+                console.log('TABS.cli.read. abcksapceCode');
                 this.cliBuffer = this.cliBuffer.slice(0, -1);
                 this.outputHistory = this.outputHistory.slice(0, -1);
                 continue;
 
             default:
+                console.log('TABS.cli.read. default cliBuffer+=currentChar: '+currentChar);
                 this.cliBuffer += currentChar;
         }
 
         if (!CliAutoComplete.isBuilding()) {
             // do not include the building dialog into the history
+            console.log('TABS.cli.read. outputHistory+=currentChar'+currentChar);
             this.outputHistory += currentChar;
         }
 
@@ -456,9 +475,12 @@ TABS.cli.read = function (readInfo) {
             reinitialiseConnection(self);
         }
 
+        console.log('TABS.cli.read. FINished calling.');
     }
 
+    console.log('TABS.cli.read. 5');
     if (!CONFIGURATOR.cliValid && validateText.indexOf('CLI') !== -1) {
+        console.log('TABS.cli.read. !CONFIGURATOR.cliValid && validateText.indexOf(CLI) !== -1');
         GUI.log(i18n.getMessage('cliEnter'));
         CONFIGURATOR.cliValid = true;
         // begin output history with the prompt (last line of welcome message)
@@ -477,6 +499,7 @@ TABS.cli.read = function (readInfo) {
 
     if (!CliAutoComplete.isEnabled())
         // fallback to native autocomplete
+        console.log('TABS.cli.read. 6 - !CliAutoComplete.isEnabled');
         setPrompt(removePromptHash(this.cliBuffer));
 };
 
