@@ -222,18 +222,23 @@ CliAutoComplete._initTextcomplete = function() {
 
     var savedMouseoverItemHandler = null;
 
+    console.log('_initTextcomplete 0');
     // helper functions
     var highlighter = function(anywhere) {
+        console.log('_initTextcomplete 1 - highlighter');
         return function(value, term) {
+            console.log('_initTextcomplete 1 - function(value,term) '+value+','+term);
             return term ? value.replace(new RegExp((anywhere?'':'^') + '('+term+')', 'gi'), '<b>$1</b>') : value;
         };
     };
     var highlighterAnywhere = highlighter(true);
     var highlighterPrefix = highlighter(false);
 
+    console.log('_initTextcomplete 2');
     var searcher = function(term, callback, array, minChars, matchPrefix) {
         var res = [];
 
+        console.log('_initTextcomplete 2 - searcher function');
         if ((minChars !== false && term.length >= minChars) || self.forceOpen || self.isOpen()) {
             term = term.toLowerCase();
             for (var i = 0; i < array.length; i++) {
@@ -244,29 +249,37 @@ CliAutoComplete._initTextcomplete = function() {
             }
         }
 
+        console.log('_initTextcomplete 3');
         callback(res);
 
+        console.log('_initTextcomplete 4');
         if (self.forceOpen && res.length == 1) {
             // hacky: if we came here because of Tab and there's only one match
             // trigger Tab again, so that textcomplete should immediately select the only result
             // instead of showing the menu
             $textarea.trigger($.Event('keydown', {keyCode:9}))
         }
+
+        console.log('_initTextcomplete 5');
     };
 
+    console.log('_initTextcomplete 6');
     var contexter = function(text) {
         var val = $textarea.val();
+        console.log('_initTextcomplete 7');
         if (val.length == text.length || val[text.length].match(/\s/)) {
             return true;
         }
         return false; // do not show autocomplete if in the middle of a word
     };
 
+    console.log('_initTextcomplete 8');
     var basicReplacer = function(value) {
         return '$1' + value + ' ';
     };
     // end helper functions
 
+    console.log('_initTextcomplete 8');
     // init textcomplete
     $textarea.textcomplete([],
         {
@@ -277,9 +290,12 @@ CliAutoComplete._initTextcomplete = function() {
             onKeydown: function(e) {
                 // some strategies may set sendOnEnter only at the replace stage, thus we call with timeout
                 // since this handler [onKeydown] is triggered before replace()
+                console.log('_initTextcomplete 8 - $textarea.textcomplete -  onKeydown: function');
                 if (e.which == 13) {
                     setTimeout(function() {
+                        console.log('_initTextcomplete 8 - e.which13');
                         if (sendOnEnter) {
+                            console.log('_initTextcomplete 8 - sendOnEnter');
                             // fake "enter" to run the textarea's handler
                             $textarea.trigger($.Event('keypress', {which:13}))
                         }
@@ -299,11 +315,14 @@ CliAutoComplete._initTextcomplete = function() {
          * Then add `mousemove` handler. If the mouse moves we consider that mouse interaction
          * is desired so we reenable the `mouseover` handler
          */
+        console.log('_initTextcomplete 9');
         if (!savedMouseoverItemHandler) {
+            console.log('_initTextcomplete 9 - !savedMouseoverItemHandler');
             // save the original 'mouseover' handeler
             savedMouseoverItemHandler = $._data($('.textcomplete-dropdown')[0], 'events').mouseover[0].handler;
         }
 
+        console.log('_initTextcomplete 10');
         $('.textcomplete-dropdown')
             .off('mouseover') // initially disable it
             .off('mousemove') // avoid `mousemove` accumulation if previous show did not trigger `mousemove`
@@ -312,7 +331,7 @@ CliAutoComplete._initTextcomplete = function() {
                 $(this).parent()
                     .off('mousemove')
                     .on('mouseover', '.textcomplete-item', savedMouseoverItemHandler);
-
+                console.log('_initTextcomplete 10 - sendMouseoveritemHandler(e)');
                 // trigger the mouseover handler to select the item under the cursor
                 savedMouseoverItemHandler(e);
             });
@@ -322,6 +341,7 @@ CliAutoComplete._initTextcomplete = function() {
 
     // strategy builder helper
     var strategy = function(s) {
+        console.log('_initTextcomplete 11 - function(strategy)');
         return $.extend({
             template: highlighterAnywhere,
             replace: basicReplacer,
@@ -334,6 +354,7 @@ CliAutoComplete._initTextcomplete = function() {
         strategy({ // "command"
             match: /^(\s*)(\w*)$/,
             search: function(term, callback) {
+                console.log('_initTextcomplete 11 - register');
                 sendOnEnter = false;
                 searcher(term, callback, cache.commands, false, true);
             },
@@ -343,6 +364,7 @@ CliAutoComplete._initTextcomplete = function() {
         strategy({ // "get"
             match: /^(\s*get\s+)(\w*)$/i,
             search:  function(term, callback) {
+                console.log('_initTextcomplete 11 - get');
                 sendOnEnter = true;
                 searcher(term, function(arr) {
                     if (term.length > 0 && arr.length > 1) {
@@ -357,6 +379,7 @@ CliAutoComplete._initTextcomplete = function() {
         strategy({ // "set"
             match: /^(\s*set\s+)(\w*)$/i,
             search:  function(term, callback) {
+                console.log('_initTextcomplete 11 - set');
                 sendOnEnter = false;
                 searcher(term, callback, cache.settings, 3);
             }
@@ -365,6 +388,7 @@ CliAutoComplete._initTextcomplete = function() {
         strategy({ // "set ="
             match: /^(\s*set\s+\w*\s*)$/i,
             search:  function(term, callback) {
+                console.log('_initTextcomplete 11 - set =');
                 sendOnEnter = false;
                 searcher('', callback, ['='], false);
             },
@@ -377,6 +401,7 @@ CliAutoComplete._initTextcomplete = function() {
         strategy({ // "set with value"
             match: /^(\s*set\s+(\w+))\s*=\s*(.*)$/i,
             search: function(term, callback, match) {
+                console.log('_initTextcomplete 11 - set Value');
                 var arr = [];
                 var settingName = match[2].toLowerCase();
                 this.isSettingValueArray = false;
@@ -417,6 +442,7 @@ CliAutoComplete._initTextcomplete = function() {
         strategy({ // "resource"
             match: /^(\s*resource\s+)(\w*)$/i,
             search:  function(term, callback, match) {
+                console.log('_initTextcomplete 11 - resource');
                 sendOnEnter = false;
                 var arr = cache.resources;
                 if (semver.gte(CONFIG.flightControllerVersion, "0.0.1")) {
@@ -439,6 +465,7 @@ CliAutoComplete._initTextcomplete = function() {
         strategy({ // "resource index"
             match: /^(\s*resource\s+(\w+)\s+)(\d*)$/i,
             search:  function(term, callback, match) {
+                console.log('_initTextcomplete 11 - index');
                 sendOnEnter = false;
                 this.savedTerm = term;
                 callback(['&lt;1-' + cache.resourcesCount[match[2].toUpperCase()] + '&gt;']);
@@ -464,6 +491,7 @@ CliAutoComplete._initTextcomplete = function() {
         strategy({ // "resource pin"
             match: /^(\s*resource\s+\w+\s+(\d*\s+)?)(\w*)$/i,
             search:  function(term, callback, match) {
+                console.log('_initTextcomplete 11 - resource pin');
                 sendOnEnter = !!term;
                 if (term) {
                     if ('none'.startsWith(term)) {
@@ -505,6 +533,7 @@ CliAutoComplete._initTextcomplete = function() {
         strategy({ // "feature" and "beeper"
             match: /^(\s*(feature|beeper)\s+(-?))(\w*)$/i,
             search:  function(term, callback, match) {
+                console.log('_initTextcomplete 11 - feature/beeper');
                 sendOnEnter = !!term;
                 var arr = cache[match[2].toLowerCase()];
                 if (!match[3]) {
@@ -525,22 +554,27 @@ CliAutoComplete._initTextcomplete = function() {
         strategy({ // "mixer"
             match: /^(\s*mixer\s+)(\w*)$/i,
             search:  function(term, callback, match) {
+                console.log('_initTextcomplete 11 - mixer');
                 sendOnEnter = true;
                 searcher(term, callback, cache.mixers, 1);
             }
         })
     ]);
 
-    if (semver.gte(CONFIG.flightControllerVersion, "0.0.1")) {
-        $textarea.textcomplete('register', [
-            strategy({ // "resource show all", from BF 4.0.0 onwards
-                match: /^(\s*resource\s+show\s+)(\w*)$/i,
-                search:  function(term, callback, matches) {
-                    sendOnEnter = true;
-                    searcher(term, callback, ['all'], 1, true);
-                },
-                template: highlighterPrefix
-            }),
-        ]);
-    }
+   console.log('_initTextcomplete 12 - bottom of strategies');
+
+    //if (semver.gte(CONFIG.flightControllerVersion, "0.0.1")) {
+    //    $textarea.textcomplete('register', [
+    //        strategy({ // "resource show all", from BF 4.0.0 onwards
+    //            match: /^(\s*resource\s+show\s+)(\w*)$/i,
+    //            search:  function(term, callback, matches) {
+    //                console.log('_initTextcomplete 11 - resource Show All');
+    //                sendOnEnter = true;
+    //                searcher(term, callback, ['all'], 1, true);
+    //            },
+    //            template: highlighterPrefix
+    //        }),
+    //    ]);
+   // }
+    console.log('_initTextcomplete 13 - end of _initTextcomplete');
 };
