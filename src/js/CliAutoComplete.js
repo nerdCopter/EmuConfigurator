@@ -73,20 +73,33 @@ CliAutoComplete._builderWatchdogTouch = function() {
 
     this._builderWatchdogStop();
 
+    console.log('CliAutoComplete._builderWatchdogTouch');
     GUI.timeout_add('autocomplete_builder_watchdog', function() {
-        if (self.builder.numFails++) {
+        console.log('CliAutoComplete._builderWatchdogTouch GUI.timeout_add');
+        if (self.builder.numFails) {
+            console.log('CliAutoComplete._builderWatchdogTouch self.builder.numFails>0: '+self.builder.numFails);
+            self.builder.numFails++;
             self.builder.state = 'fail';
             self.writeToOutput('Failed!<br># ');
             $(self).trigger('build:stop');
         } else {
             // give it one more try
+            self.writeToOutput('Retry...<br># ');
+            console.log('CliAutoComplete._builderWatchdogTouch self.builder.numFails!>0 (Retry): '+self.builder.numFails);
+
             self.builder.state = 'reset';
+
+            console.log('CliAutoComplete._builderWatchdogTouch (Retry): '+self.builder.numFails+' and builderStart()');
             self.builderStart();
+            console.log('CliAutoComplete._builderWatchdogTouch (Retry): '+self.builder.numFails+' and AFTER builderStart()');
         }
+        console.log('_builderWatchdogTouch - FIN GUI.timeout_add');
     }, 3000);
+    console.log('_builderWatchdogTouch - FIN.');
 };
 
 CliAutoComplete._builderWatchdogStop = function() {
+    console.log('_builderWatchdogStop');
     GUI.timeout_remove('autocomplete_builder_watchdog');
 };
 
@@ -122,11 +135,11 @@ CliAutoComplete.builderParseLine = function(line) {
     console.log('CliAutoComplete.builderParseLine: line: '+line);
     this._builderWatchdogTouch();
 
+    console.log('CliAutoComplete.builderParseLine: finished _builderWatchdogTouch.');
     if (line.indexOf(builder.sentinel) !== -1) {
         // got sentinel
         console.log('CliAutoComplete.builderParseLine: got sentinal: '+builder.sentinel);
         var command = builder.commandSequence.shift();
-
 
         console.log('CliAutoComplete.builderParseLine: command: '+command);
         if (command && this.configEnabled) {

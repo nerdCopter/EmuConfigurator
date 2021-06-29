@@ -480,7 +480,7 @@ TABS.cli.read = function (readInfo) {
 
     console.log('TABS.cli.read. 5');
     if (!CONFIGURATOR.cliValid && validateText.indexOf('CLI') !== -1) {
-        console.log('TABS.cli.read. !CONFIGURATOR.cliValid && validateText.indexOf(CLI) !== -1');
+        console.log('TABS.cli.read. 5.1');
         GUI.log(i18n.getMessage('cliEnter'));
         CONFIGURATOR.cliValid = true;
         // begin output history with the prompt (last line of welcome message)
@@ -489,14 +489,17 @@ TABS.cli.read = function (readInfo) {
         this.outputHistory = lastLine;
         validateText = "";
 
+        console.log('TABS.cli.read. 5.2 ');
         if (CliAutoComplete.isEnabled() && !CliAutoComplete.isBuilding()) {
             // start building autoComplete
+            console.log('TABS.cli.read. 5.3 ');
             console.log('CliAutoComplete.builderStart() command calling...');
             CliAutoComplete.builderStart();
             console.log('CliAutoComplete.builderStart() command finished');
         }
     }
 
+    console.log('TABS.cli.read. 6');
     if (!CliAutoComplete.isEnabled())
         // fallback to native autocomplete
         console.log('TABS.cli.read. 6 - !CliAutoComplete.isEnabled');
@@ -504,25 +507,31 @@ TABS.cli.read = function (readInfo) {
 };
 
 TABS.cli.sendLine = function (line, callback) {
+    console.log('sendLine');
     this.send(line + '\n', callback);
 };
 
 TABS.cli.sendNativeAutoComplete = function (line, callback) {
+    console.log('TABS.cli.sendLine');
     this.send(line + '\t', callback);
 };
 
 TABS.cli.send = function (line, callback) {
+    console.log('TABS.cli.send');
     var bufferOut = new ArrayBuffer(line.length);
     var bufView = new Uint8Array(bufferOut);
 
     for (var c_key = 0; c_key < line.length; c_key++) {
         bufView[c_key] = line.charCodeAt(c_key);
+        console.log('TABS.cli.send c_key:'+c_key+' char:'+bufView[c_key]);
     }
 
+    console.log('TABS.cli.send - serial.send(bufferOut, callback): bufferOut: '+bufferOut.toString());
     serial.send(bufferOut, callback);
 };
 
 TABS.cli.cleanup = function (callback) {
+    console.log('TABS.cli.cleanup');
     if (TABS.cli.GUI.snippetPreviewWindow) {
         TABS.cli.GUI.snippetPreviewWindow.destroy();
         TABS.cli.GUI.snippetPreviewWindow = null;
