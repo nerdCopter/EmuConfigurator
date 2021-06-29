@@ -3674,7 +3674,7 @@
         "message": "Smith Predictor"
     },
         "pidTuningSmithPredictorEnabledSwitchHelp": {
-        "message": "Smith predictor compensates for inherit 'deadtime', or delay, of control processing. i.e. PID and Filter processing.  Smith predictor prefers clean gyro. Noisy gyro may cause amplifications. Default is ON. Further fine tuning of Smith Prediction can be performed in the CLI by way of `get smith_predict`; However, defaults are good for most aircraft."
+        "message": "Smith predictor compensates for inherit 'deadtime', or delay, of control processing. i.e. PID and Filter processing.  Smith predictor prefers clean gyro. Noisy gyro may cause amplifications. Default is ON. Further fine tuning of Smith Prediction can be performed in the CLI. `get smith_predict`; However, defaults are good for most aircraft. Note that this is a Global filter setting, not PID-Profile."
     },
     "DirectFeedForward": {
         "message":"Direct Feed"
@@ -3695,13 +3695,13 @@
         "message": "Axis Lock Multiplier"
     },
         "pidTuningAxisLockMultiplierHelp": {
-        "message": "Axis-Lock significantly reduces pidsum for opposing axes. Multiplier range is 0 to 10. Default is 0 (Axis-Lock OFF)."
+        "message": "Axis-Lock significantly reduces pidsum for opposing axes. Multiplier range is 0 to 10. Default 'axis_lock_multiplier = 0' (Axis-Lock OFF)."
     },
         "pidTuningAxisLockHz": {
         "message": "Axis Lock Cutoff Hz"
     },
         "pidTuningAxisLockHzHelp": {
-        "message": "Axis-Lock significantly reduces pidsum for opposing axes. Cutoff-Hz range is 1 to 50. Default is 2, but has no effect when Axis-Lock is off."
+        "message": "Axis-Lock significantly reduces pidsum for opposing axes. Cutoff-Hz range is 1 to 50. Default 'axis_lock_hz = 2', but has no effect when Axis-Lock is off."
     },
     "COMMENT": {"message": "end MSP 1.51"},
     "COMMENT": {"message": "MSP 1.51"},
@@ -3752,7 +3752,7 @@
         "message": "Linear Throttle"
     },
         "pidTuningLinearThrottleHelp": {
-        "message": "Linearizes the throttle response. Enabling this may drop the hover-point but increase high-end range. Default OFF."
+        "message": "Linearizes the throttle response. Enabling this may drop the hover-point but increase high-end range. Default 'linear_throttle' = OFF."
     },
     "COMMENT": {"message": "end MSP 1.51"},
 
