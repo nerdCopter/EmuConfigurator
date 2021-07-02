@@ -1014,6 +1014,12 @@ MspHelper.prototype.process_data = function(dataHandler) {
                         FILTER_CONFIG.dterm_lowpass_type = data.readU8();
                     }
 
+                    //MSP 1.51
+                    if (semver.gte(CONFIG.apiVersion, "1.51.0")) {
+                        FILTER_CONFIG.dterm_lowpass2_type = data.readU8();
+                    }
+                    //end MSP 1.51
+
                     if (semver.gte(CONFIG.apiVersion, "1.39.0")) {
                         FILTER_CONFIG.gyro_hardware_lpf = data.readU8();
                         let gyro_32khz_hardware_lpf = data.readU8();
@@ -1977,6 +1983,13 @@ MspHelper.prototype.crunch = function(code) {
                 if (semver.gte(CONFIG.apiVersion, "1.36.0")) {
                     buffer.push8(FILTER_CONFIG.dterm_lowpass_type);
                 }
+
+                //MSP 1.51
+                if (semver.gte(CONFIG.apiVersion, "1.36.0")) {
+                    buffer.push8(FILTER_CONFIG.dterm_lowpass2_type);
+                }
+                //end MSP 1.51
+
                 if (semver.gte(CONFIG.apiVersion, "1.39.0")) {
                     let gyro_32khz_hardware_lpf = 0;
                     gyro_32khz_hardware_lpf = FILTER_CONFIG.gyro_32khz_hardware_lpf;
