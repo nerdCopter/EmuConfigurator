@@ -355,6 +355,15 @@ TABS.pid_tuning.initialize = function(callback) {
             $('.antigravity').hide();
         }
 
+        //MSP 1.51 //dTermLPF2 type
+        if (semver.gte(CONFIG.apiVersion, "1.51.0")) {
+            $('.pid_filter select[name="dtermLowpass2Type"]').val(FILTER_CONFIG.dterm_lowpass2_type);
+        } else {
+            $('.dtermLowpass2Type').hide();
+        }
+        //end MPS 1.51
+
+
         if (semver.gte(CONFIG.apiVersion, "1.37.0")) {
             $('.pid_tuning input[name="rc_rate_pitch"]').val(RC_tuning.rcPitchRate.toFixed(2));
             $('.pid_tuning input[name="rc_pitch_expo"]').val(RC_tuning.RC_PITCH_EXPO.toFixed(2));
@@ -951,6 +960,13 @@ TABS.pid_tuning.initialize = function(callback) {
             $('.pid_filter input[name="dtermLowpass2FrequencyRoll"]').val(checked ? cutoffRoll : 0).attr('disabled', !checked);
             $('.pid_filter input[name="dtermLowpass2FrequencyPitch"]').val(checked ? cutoffPitch : 0).attr('disabled', !checked);
             $('.pid_filter input[name="dtermLowpass2FrequencyYaw"]').val(checked ? cutoffYaw : 0).attr('disabled', !checked);
+
+            //MSP 1.51
+            if (semver.gte(CONFIG.apiVersion, "1.51.0")) {
+                var type = (FILTER_CONFIG.dterm_lowpass2_hz > 0 || FILTER_CONFIG.dterm_lowpass2_hz_roll > 0) ? FILTER_CONFIG.dterm_lowpass2_type : FILTER_DEFAULT.dterm_lowpass2_type;
+                $('.pid_filter select[name="dtermLowpass2Type"]').val(type).attr('disabled', !checked);
+            }
+            //end MSP 1.51
         });
 
         if (semver.lt(CONFIG.apiVersion, "1.44.0")) {
@@ -1212,6 +1228,12 @@ TABS.pid_tuning.initialize = function(callback) {
             ADVANCED_TUNING.itermThrottleThreshold = parseInt($('.antigravity input[name="itermThrottleThreshold"]').val());
             ADVANCED_TUNING.itermAcceleratorGain = parseInt($('.antigravity input[name="itermAcceleratorGain"]').val() * 1000);
         }
+
+        //MSP 1.51
+        if (semver.gte(CONFIG.apiVersion, "1.51.0")) {
+            FILTER_CONFIG.dterm_lowpass2_type = $('.pid_filter select[name="dtermLowpass2Type"]').val();
+        }
+
 
         if (semver.gte(CONFIG.apiVersion, "1.39.0")) {
             if (semver.gte(CONFIG.apiVersion, "1.44.0")) {

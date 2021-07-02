@@ -1649,15 +1649,33 @@
                                         </div>
                                     </td>
                                 </tr>
+
+                                <!-- MSP 1.51 -->
+                                <tr><td><br clear="all"></td></tr>
                                 <tr>
-                                    <th colspan="2">
-                                        <div> &nbsp; </div>
-                                    </th>
+                                    <td>
+                                        <span class="groupSwitchValue">
+                                            <span class="inputSwitch"><input type="checkbox" id="dtermLowpass2Enabled" class="toggle">
+                                                <select class="dtermLowpass2Type" name="dtermLowpass2Type">
+                                                    <!--  Populated on execution -->
+                                                </select>
+                                            </span>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="dtermLowpass2Type">
+                                            <label>
+                                                <span i18n="pidTuningDTermLowpassType"></span>
+                                            </label>
+                                        </div>
+                                    </td>
                                 </tr>
+                                <!-- end MSP 1.51 -->
+
                                 <tr class="dtermLowpass2">
                                     <td>
                                         <span class="groupSwitchValue">
-                                            <span class="inputSwitch"><input type="checkbox" id="dtermLowpass2Enabled" class="toggle"></span>
+                                            <!-- <span class="inputSwitch"><input type="checkbox" id="dtermLowpass2Enabled" class="toggle"></span> -->
                                             <div class="dtermLowpass2Frequency">
                                                 <span class="inputValue" id='test'><input type="number" name="dtermLowpass2Frequency" step="1" min="0" max="16000"></span>
                                             </div>
