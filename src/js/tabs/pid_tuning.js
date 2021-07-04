@@ -2142,6 +2142,15 @@ TABS.pid_tuning.initialize = function(callback) {
                         $('input[name="axisLockHz-number"]').val(presetJson[presetSelected]['axis_lock_hz']);
                     }
 
+                    //dTermLPF2Type
+                    if (typeof presetJson[presetSelected]['dterm_lowpass2_type'] === 'undefined' || presetJson[presetSelected]['dterm_lowpass2_type'] === null) {
+                        // variable is undefined or null (non-exist)
+                        $('select[name="dtermLowpass2Type"]').val('0');  //default
+                    } else {
+                        // preset exists, so use it.
+                        $('select[name="dtermLowpass2Type"]').val(presetJson[presetSelected]['dterm_lowpass2_type']);
+                    }
+
                 }
                 //end MSP 1.51 //0.4.0 Presets
 
