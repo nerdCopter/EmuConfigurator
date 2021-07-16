@@ -1985,7 +1985,7 @@ MspHelper.prototype.crunch = function(code) {
                 }
 
                 //MSP 1.51
-                if (semver.gte(CONFIG.apiVersion, "1.36.0")) {
+                if (semver.gte(CONFIG.apiVersion, "1.51.0")) {
                     buffer.push8(FILTER_CONFIG.dterm_lowpass2_type);
                 }
                 //end MSP 1.51
